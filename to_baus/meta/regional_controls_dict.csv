@@ -1,11 +1,11 @@
-variable, type, missing_value, null_ok, required, longer_name, description, notes
-year, int, NA, no, yes, Forecast Year, forecast year for other data in 5 year intervals, 
-totpop, int, NA, no, yes, Total Population, total count of persons in the region that year, what about gq?
-empres, int, NA, no, yes, Employed Residents, total count of persons with jobs in the region that year, 
-medianage, float, NA, no, ?, Median Age, median age for person in the region that year, 
-age0004, int, NA, no, ?, Population Aged 0 to 4, total count of persons in that age category in the region that year, what about gq?
-age0519, int, NA, no, ?, Population Aged 5 to 19, total count of persons in that age category in the region that year, what about gq?
-age2044, int, NA, no, ?, Population Aged 20 to 44, total count of persons in that age category in the region that year, what about gq?
-age4564, int, NA, no, ?, Population Aged 45 to 64, total count of persons in that age category in the region that year, what about gq?
-age65p, int, NA, no, ?, Population Aged 64 and Up, total count of persons in that age category in the region that year, what about gq?
-st_res_vac, float, NA, no, ?, Short Term Residential Vacancy Target, target for BAUS residential vacancy rate that year in the region, 
+variable, type, length, missing_value, null_ok, required, longer_name, description, notes
+year, int, ?, , no, yes, Forecast Year, forecast year for other data in 5 year intervals, 
+totpop, int, ?, , no, yes, Total Population, total count of persons in the region that year, what about gq?
+empres, int, ?, , no, yes, Employed Residents, total count of persons with jobs in the region that year, 
+medianage, float, ?, , no, ?, Median Age, median age for person in the region that year, 
+age0004, int, ?, , no, ?, Population Aged 0 to 4, total count of persons in that age category in the region that year, what about gq?
+age0519, int, ?, , no, ?, Population Aged 5 to 19, total count of persons in that age category in the region that year, what about gq?
+age2044, int, ?, , no, ?, Population Aged 20 to 44, total count of persons in that age category in the region that year, what about gq?
+age4564, int, ?, , no, ?, Population Aged 45 to 64, total count of persons in that age category in the region that year, what about gq?
+age65p, int, ?, , no, ?, Population Aged 64 and Up, total count of persons in that age category in the region that year, what about gq?
+st_res_vac, float, ?, , no, ?, Short Term Residential Vacancy Target, target for BAUS residential vacancy rate that year in the region, 
