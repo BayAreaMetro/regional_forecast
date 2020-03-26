@@ -3,7 +3,7 @@ year, int, ?, , no, yes, Forecast Year, forecast year for other data in 5 year i
 county, int, ?, , no, ?, County Number, MTC style numbers for counties, starts with sfr and moves counterclockwise
 county_name, string, ?, , no, ?, County Name, text name for county, 
 shr_occ_management, float, ?, , no, yes, Share Management, proportion of jobs in management occupation for that year, 
-shr_occ_professional, float ?,, , no, yes, Share Professional, proportion of jobs in professional occupation for that year, 
+shr_occ_professional, float, ?, , no, yes, Share Professional, proportion of jobs in professional occupation for that year, 
 shr_occ_services, float, ?, , no, yes, Share Services, proportion of jobs in services occupation for that year, 
 shr_occ_retail, float, ?, , no, yes, Share Retail, proportion of jobs in retail occupation for that year, 
 shr_occ_manual, float, ?, , no, yes, Share Manual, proportion of jobs in manual occupation for that year, 
