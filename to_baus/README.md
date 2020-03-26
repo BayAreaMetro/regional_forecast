@@ -15,5 +15,5 @@ Each folder contains the 5 output files for use in BAUS:
 * meta: this folder contains data dictionaries ("dict") and optional metadata ("meta") for each of the files
 * s20: Baseline for PBA50 (so the lower HH count without policy change)
 * s21: Blueprint Basic
-* s22: Blueprint Plus
+* s22: Blueprint Plus Fix It First
 * s23: Blueprint Plus Crossing
