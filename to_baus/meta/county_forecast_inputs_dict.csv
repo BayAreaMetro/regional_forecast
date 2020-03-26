@@ -1,9 +1,9 @@
-variable, type, missing_value, null_ok, required, longer_name, description, notes
-COUNTY, int, NA, no, ?, County Number, MTC style numbers for counties, starts with sfr and moves counterclockwise
-county_name, string, NA, no, ?, County Name, text name for county, 
-shr_occ_management, float, NA, no, yes, Share Management, proportion of jobs in management occupation for entire forecast, 
-shr_occ_professional, float, NA, no, yes, proportion Professional, share of jobs in professional occupation for entire forecast, 
-shr_occ_services, float, NA, no, yes, Share Services, proportion of jobs in services occupation for entire forecast, 
-shr_occ_retail, float, NA, no, yes, Share Retail, proportion of jobs in retail occupation for entire forecast, 
-shr_occ_manual, float, NA, no, yes, Share Manual, proportion of jobs in manual occupation for entire forecast, 
-shr_occ_military, float, NA, no, yes, Share Military, proportion of jobs in military occupation for entire forecast, 
+variable, type, length, missing_value, null_ok, required, longer_name, description, notes
+COUNTY, int, ?, , no, ?, County Number, MTC style numbers for counties, starts with sfr and moves counterclockwise
+county_name, string, ?, , no, ?, County Name, text name for county, 
+shr_occ_management, float, ?, , no, yes, Share Management, proportion of jobs in management occupation for entire forecast, 
+shr_occ_professional, float, ?, , no, yes, proportion Professional, share of jobs in professional occupation for entire forecast, 
+shr_occ_services, float, ?, , no, yes, Share Services, proportion of jobs in services occupation for entire forecast, 
+shr_occ_retail, float, ?, , no, yes, Share Retail, proportion of jobs in retail occupation for entire forecast, 
+shr_occ_manual, float, ?, , no, yes, Share Manual, proportion of jobs in manual occupation for entire forecast, 
+shr_occ_military, float, ?, , no, yes, Share Military, proportion of jobs in military occupation for entire forecast, 
