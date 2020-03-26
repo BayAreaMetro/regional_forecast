@@ -9,9 +9,10 @@ This foilder contains the regional forecast files for Bay Area UrbanSim.
 * [Additional Regional Control Totals](https://github.com/BayAreaMetro/bayarea_urbansim/blob/master/data/regional_controls.csv): This table provides additional forecast information that is passed on to the Travel Model for each 5-year forcast interval (2010-2050). Values include counts of persons, employed residents, and persons by age category. Other values include the median age and the short term residential vacancy rate (set at 0.03, aka 3%, if no other expectations exist). NAME FORMAT: regional_controls_s# where # is the scenario number below.
 * [County Forecast Inputs](https://github.com/BayAreaMetro/bayarea_urbansim/blob/master/data/county_forecast_inputs.csv): This table provide the proportion of jobs expected to be in each occupation by county. NAME FORMAT: county_forecast_inputs_s# where # is the scenario number below.
 * [County Employment Forecast](https://github.com/BayAreaMetro/bayarea_urbansim/blob/master/data/county_employment_forecast.csv): This table provide the proportion of jobs expected to be in each occupation by county for each 5-year forcast interval (2010-2050). NAME FORMAT: county_employment_forecast_s# where # is the scenario number below.
+* [regional_demographic_forecast](https://github.com/BayAreaMetro/bayarea_urbansim/blob/datatypes_dict/data/regional_demographic_forecast.csv): This table provides region-level forecast data for households including the proprotion in various categories of income, size, worker count, householder age, and presence of children. NAME FORMAT: rgional_demographic_forecast_s# where # is the scenario number below.
 
 ## Scenarios
-Each folder contains the 5 output files for use in BAUS:
+Each folder contains 6 files for use in BAUS:
 * meta: this folder contains data dictionaries ("dict") and optional metadata ("meta") for each of the files
 * s20: Baseline for PBA50 (so the lower HH count without policy change)
 * s21: Blueprint Basic
