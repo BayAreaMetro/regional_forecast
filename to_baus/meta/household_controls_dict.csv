@@ -1,6 +1,6 @@
-variable, type, missing_value, null_ok, required, longer_name, description, notes
-year, int, NA, no, yes, Forecast Year, forecast year for other data in 5 year intervals, 
-q1_households, int, NA, no, yes, Pseudo Quartile One Household, count of households in this approximate quartile, lowest income
-q2_households, int, NA, no, yes, Pseudo Quartile Two Household, count of households in this approximate quartile, 
-q3_households, int, NA, no, yes, Pseudo Quartile Three Household, count of households in this approximate quartile, 
-q4_households, int, NA, no, yes, Pseudo Quartile Four Household, count of households in this approximate quartile, highest income
+variable, type, length, missing_value, null_ok, required, longer_name, description, notes
+year, int, ?, , no, yes, Forecast Year, forecast year for other data in 5 year intervals, 
+q1_households, int, ?, , no, yes, Pseudo Quartile One Household, count of households in this approximate quartile, lowest income
+q2_households, int, ?, , no, yes, Pseudo Quartile Two Household, count of households in this approximate quartile, 
+q3_households, int, ?, , no, yes, Pseudo Quartile Three Household, count of households in this approximate quartile, 
+q4_households, int, ?, , no, yes, Pseudo Quartile Four Household, count of households in this approximate quartile, highest income
