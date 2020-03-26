@@ -1,8 +1,8 @@
-variable, type, missing_value, null_ok, required, longer_name, description, notes
-year, int, NA, no, yes, Forecast Year, forecast year for other data in 5 year intervals, 
-AGREMPN, int, NA, no, yes, Agricultural and Resource Extraction Jobs, count of total regional jobs in that sector for that years,  
-MWTEMPN, int, NA, no, yes, Manufacturing Warehouse and Transport Jobs, count of total regional jobs in that sector for that years,  
-RETEMPN, int, NA, no, yes, Retail Jobs, count of total regional jobs in that sector for that years,  
-FPSEMPN, int, NA, no, yes, Financial Professional Services Jobs, count of total regional jobs in that sector for that years,  
-HEREMPN, int, NA, no, yes, Health and Education Jobs, count of total regional jobs in that sector for that years,  
-OTHEMPN, int, NA, no, yes, Other Jobs, count of total regional jobs in that sector for that years, 
+variable, type, length, missing_value, null_ok, required, longer_name, description, notes
+year, int, ?, , no, yes, Forecast Year, forecast year for other data in 5 year intervals, 
+AGREMPN, int, ?, , no, yes, Agricultural and Resource Extraction Jobs, count of total regional jobs in that sector for that years,  
+MWTEMPN, int, ?, , no, yes, Manufacturing Warehouse and Transport Jobs, count of total regional jobs in that sector for that years,  
+RETEMPN, int, ?, , no, yes, Retail Jobs, count of total regional jobs in that sector for that years,  
+FPSEMPN, int, ?, , no, yes, Financial Professional Services Jobs, count of total regional jobs in that sector for that years,  
+HEREMPN, int, ?, , no, yes, Health and Education Jobs, count of total regional jobs in that sector for that years,  
+OTHEMPN, int, ?, , no, yes, Other Jobs, count of total regional jobs in that sector for that years, 
