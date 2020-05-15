@@ -9,6 +9,7 @@ Data for this model come from different files (metadata is in csv file with "dic
 * Data that is specific to each scenaro (besides HH counts) is in [scenario_specific_parameters.csv](https://github.com/BayAreaMetro/regional_forecast/blob/master/housing_income_share_metric/scenario_specific_parameters.csv)
 
 The script to calculate the metric is called sssss.py OR sssss.R above. It takes the data through these steps:
-*
+* calc count of HH in each situation by pseudo-quartile cell 
 *
 * calculate weighted income value for each comnbo of 
+* Output table housing_income_share_output_yyyy_mm_dd_tttt above where the end is a time stamp. This is set up as above with info on
