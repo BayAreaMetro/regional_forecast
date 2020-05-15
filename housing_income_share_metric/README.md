@@ -12,4 +12,4 @@ The script to calculate the metric is called sssss.py OR sssss.R above. It takes
 * calc count of HH in each situation by pseudo-quartile cell 
 *
 * calculate weighted income value for each comnbo of 
-* Output table housing_income_share_output_yyyy_mm_dd_tttt above where the end is a time stamp. This is set up as above with info on
+* Output table housing_income_share_output_yyyy_mm_dd_tttt.csv (in the style of housing_income_share_output_yyyy_mm_dd_tttt_template.csv above) where the end is a time stamp. This is set up as above with info on
