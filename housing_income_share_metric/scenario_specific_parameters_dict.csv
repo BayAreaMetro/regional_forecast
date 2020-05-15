@@ -4,3 +4,4 @@ total_deed_restricted_units_2050, int, long, , no, yes, Total BA Deed Restricted
 total_rent_controlled_units_2050, int, long, , no, yes, Total BA Rent Controlled Units in 2050, decription, fr Mike
 avg_hu_price_ratio_2050_to_2010, float, ?, , no, yes, Ratio of Avg BA Housing Price in 2020 to 2010, ratio so somewhere between 0.75 and 5, fr Bobby
 avg_hu_price_ratio_2050_to_2015, float, ?, , no, yes, Ratio of Avg BA Housing Price in 2020 to 2010, ratio so somewhere between 0.75 and 5, fr Bobby
+cost_to_build_one_deed_restriced_unit, int, long, , no, yes, Cost to Build One Deed Restricted Unit, base year average cost of providing one unit in 2010$,
