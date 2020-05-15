@@ -1,8 +1,8 @@
-Segment, avg_shr_on_housing_2010, avg_shr_on_housing_2015, avg_shr_on_housing_2050
-Q1, xx.x%, xx.x%, xx.x%
-Q2, xx.x%, xx.x%, xx.x%
-Q3, xx.x%, xx.x%, xx.x%
-Q4, xx.x%, xx.x%, xx.x%
-Q1Q2, xx.x%, xx.x%, xx.x%
-hh_all, xx.x%, xx.x%, xx.x%
-others?, xx.x%, xx.x%, xx.x%
+Segment, avg_shr_on_housing_2010, avg_shr_on_housing_2015, avg_shr_on_housing_2050, annual_amount_per_hh_2010, annual_amount_per_hh_2015, annual_amount_per_hh_2050
+Q1, xx.x, xx.x, xx.x, xxxxx, xxxx, xxxx
+Q2, xx.x, xx.x, xx.x, xxxxx, xxxx, xxxx
+Q3, xx.x, xx.x, xx.x, xxxxx, xxxx, xxxx
+Q4, xx.x, xx.x, xx.x, xxxxx, xxxx, xxxx
+Q1Q2, xx.x, xx.x, xx.x, xxxxx, xxxx, xxxx
+hh_all, xx.x, xx.x, xx.x, xxxxx, xxxx, xxxx
+others?, xx.x, xx.x, xx.x, xxxxx, xxxx, xxxx
