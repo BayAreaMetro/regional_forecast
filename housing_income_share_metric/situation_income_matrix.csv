@@ -1,0 +1,4 @@
+situation, Q1, Q2, Q3,
+low_income_unit, 1, 0, 0
+subsized_hh, 1, 0, 0
+rent_control, 0.4, 0.2, 0.1
