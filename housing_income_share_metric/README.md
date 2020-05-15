@@ -8,4 +8,7 @@ Data for this model come from different files (metadata is in csv file with "dic
 * The matrix that sets the share of HHs in each situation that are in each pseuo_quartile is at [situation_income_matrix.csv](https://github.com/BayAreaMetro/regional_forecast/blob/master/housing_income_share_metric/situation_income_matrix.csv). Each cell sets the proprortion of units in that situation that are filled by HHs in that quartile.  This table is set up so that it is missing the column (Q4) and final row (HHs in market-rate housing). The script will calculate the counts in these cells as a remainder of the other values. So, row and column totals cannot exceed 1 (but they will often be less, leaving some spots for the remainder row or column).
 * Data that is specific to each scenaro (besides HH counts) is in [scenario_specific_parameters.csv](https://github.com/BayAreaMetro/regional_forecast/blob/master/housing_income_share_metric/scenario_specific_parameters.csv)
 
-Script
+The script to calculate the metric is called sssss.py OR sssss.R above. It takes the data through these steps:
+*
+*
+* calculate weighted income value for each comnbo of 
