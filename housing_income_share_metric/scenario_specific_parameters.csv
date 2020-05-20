@@ -1,5 +1,5 @@
 scenario, total_deed_restricted_units_2050, total_rent_controlled_units_2050, avg_hu_price_ratio_2050_to_2010, avg_hu_price_ratio_2050_to_2015, cost_to_build_one_deed_restriced_unit, rent_control_reloc_freq, transfer_shr_q4, transfer_shr_q3, transfer_shr_q2
-s20, , , , , , , , ,
-s21, , , , , , , , ,
-s22, , , , , , , , ,
-s23, , , , , , , , ,
+s20, , ,5.2649,4.0301, , , , ,
+s21, , ,3.3426,2.5587, , , , ,
+s22, , ,3.319,2.5406, , , , ,
+s23, , ,3.3197,2.5411, , , , ,
