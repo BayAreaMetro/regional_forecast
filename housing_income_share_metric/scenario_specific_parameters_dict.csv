@@ -5,6 +5,7 @@ total_rent_controlled_units_2050, int, long, , no, yes, Total BA Rent Controlled
 avg_hu_price_ratio_2050_to_2010, float, ?, , no, yes, Ratio of Avg BA Housing Price in 2020 to 2010, ratio so somewhere between 0.75 and 5, fr Bobby
 avg_hu_price_ratio_2050_to_2015, float, ?, , no, yes, Ratio of Avg BA Housing Price in 2020 to 2010, ratio so somewhere between 0.75 and 5, fr Bobby
 cost_to_build_one_deed_restriced_unit, int, long, , no, yes, Cost to Build One Deed Restricted Unit, base year average cost of providing one unit in 2010$,
+cost_to_provide_one_inclusionary_unit, int, long, , no, yes, Cost to Provide One Inclusionary Unit, base year average cost of providing one unit in 2010$,
 rent_control_reloc_frequency, int, short, , no, yes, Average Number Years in Same Rent Controlled Uni, the average HH under rent contols moves in this many year,
 transfer_shr_q4, float, ?, , no, yes, Share of Low Income Unit Funding from Q4, proportion of total funding from highest income segment, range 0 to 1 and three cats must be LE 1
 transfer_shr_q3, float, ?, , no, yes, Share of Low Income Unit Funding from Q3, proportion of total funding from this segment, range 0 to 1 and three cats must be LE 1
