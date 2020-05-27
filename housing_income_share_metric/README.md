@@ -1,5 +1,7 @@
 # Share of HH Income Spent on Housing Metric
 
+* NEED TO UPDATE SOME TABLES FOR CONSISTENCY WHEN CHOOSE BASEYEAR
+
 Code and data here is used to calculate the metric for share of HH income spent on housing.
 
 Data for this model come from different files (metadata is in csv file with "dict" appended to data file name):
