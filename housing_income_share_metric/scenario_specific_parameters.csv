@@ -1,5 +1,5 @@
 scenario, paid_rdr_units_2050, incusionary_odr_units_2050, total_rpc_units_2050, total_opc_units_2050, avg_hu_price_ratio_2050_to_2010, avg_hu_price_ratio_2050_to_2015, cost_to_build_one_deed_restriced_unit, cost_to_provide_one_inclusionary_unit, rent_control_reloc_freq, transfer_shr_q4, transfer_shr_q3, transfer_shr_q2
-s20, , ,1.7459,1.3364, , , , , ,
-s21, , ,1.1085,0.8485, , , , , ,
-s22, , ,1.1006,0.8425, , , , , ,
-s23, , ,1.1009,0.8427, , , , , ,
+s20, , , , ,1.7459,1.3364, , , , , ,
+s21, , , , ,1.1085,0.8485, , , , , ,
+s22, , , , ,1.1006,0.8425, , , , , ,
+s23, , , , ,1.1009,0.8427, , , , , ,
