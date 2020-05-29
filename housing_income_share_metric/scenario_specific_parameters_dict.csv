@@ -1,7 +1,11 @@
 variable, type, length, missing_value, null_ok, required, longer_name, decription, notes
 scenario, string, 10, , no, yes, Short Scenario Name, letter s and scenario number, must match files in to_baus in regional_forecast
-total_deed_restricted_units_2050, int, long, , no, yes, Total BA Deed Restricted Low Income Units in 2050, decription, fr Mike
-total_rent_controlled_units_2050, int, long, , no, yes, Total BA Rent Controlled Units in 2050, decription, fr Mike
+paid_rdr_units_2050, int, long, , no, yes, Total BA Deed Restricted Low Income Rental Units from Spending in 2050, decription, fr Mike
+paid_odr_units_2050, int, long, , no, yes, Total BA Deed Restricted Low Income Owner Units from Spending in 2050, decription, fr Mike
+incusionary_rdr_units_2050, int, long, , no, yes, Total BA Deed Restricted Low Income Rental Units from Inclusionary Zoning in 2050, decription, fr Mike
+incusionary_odr_units_2050, int, long, , no, yes, Total BA Deed Restricted Low Income Owner Units from Inclusionary Zoning in 2050, decription, fr Mike
+total_rpc_units_2050, int, long, , no, yes, Total BA Price Controlled Rental Units in 2050, decription, fr Mike
+total_opc_units_2050, int, long, , no, yes, Total BA Price Controlled Owner Units in 2050, decription, fr Mike
 avg_hu_price_ratio_2050_to_2010, float, ?, , no, yes, Ratio of Avg BA Housing Price in 2020 to 2010, ratio so somewhere between 0.75 and 5, fr Bobby
 avg_hu_price_ratio_2050_to_2015, float, ?, , no, yes, Ratio of Avg BA Housing Price in 2020 to 2010, ratio so somewhere between 0.75 and 5, fr Bobby
 cost_to_build_one_deed_restriced_unit, int, long, , no, yes, Cost to Build One Deed Restricted Unit, base year average cost of providing one unit in 2010$,
