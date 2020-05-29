@@ -9,9 +9,5 @@ Data for this model come from different files (metadata is in csv file with "dic
 * The hh_proportion_matrix_2050_[snn].csv is the share of HHs in each segment in 2050. Thhe hh_income_matrix_2050_[snn].csv is the mean share of HH income spent on housing for households in that segment in 2050. 
 * Data that is specific to each scenaro (besides the two matrices) is in [scenario_specific_parameters.csv](https://github.com/BayAreaMetro/regional_forecast/blob/master/housing_income_share_metric/scenario_specific_parameters.csv)
 
-The script to calculate the metric is called sssss.py OR sssss.R above. It takes the data through these steps:
-* calc count of HH in each situation X pseudo-quartile X tenure cell
-* calculate weighted share of income in each comnbo of situation X pseudo-quartile X tenure
-* adjust for price control timeline and transfer to build "comprehensive" prices
-* Output table housing_income_share_output_yyyy_mm_dd_tttt.csv (in the style of [housing_income_share_output_yyyy_mm_dd_tttt_template.csv](https://github.com/BayAreaMetro/regional_forecast/blob/master/housing_income_share_metric/housing_income_share_output_2020_05_15_1141_tempate.csv) above) where the end is a time stamp. This is set up as above with info on
+* Output table housing_income_share_output_snn_yyyy_mm_dd_tttt.csv (in the style of [housing_income_share_output_snn_yyyy_mm_dd_tttt_template.csv](https://github.com/BayAreaMetro/regional_forecast/blob/master/housing_income_share_metric/housing_income_share_output_[snn]_2020_05_15_1141_tempate.csv) above) where the end is a time stamp. This is set up as above with info on
 
