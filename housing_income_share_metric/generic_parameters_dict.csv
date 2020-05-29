@@ -1,20 +1,13 @@
 variable, type, length, missing_value, null_ok, required, longer_name, decription, notes
-q1_owner_2015_share_income_on_housing, float, ?, , no, yes, Avg Share of Q1 Owner HH Income Spent on Housing in 2015, is a percentage , fr ACS analysis 
-q1_regrenter_2015_share_income_on_housing, float, ?, , no, yes, Avg Share of Q1 Regular Renter HH Income Spent on Housing in 2015, is a percentage , fr ACS analysis
-q1_rentcontrolled_2015_share_income_on_housing,  float, ?, , no, yes, Avg Share of Q1 Rent-Controlled Renter HH Income Spent on Housing in 2015, is a percentage , fr ??
-q1_subsidized_2015_share_income_on_housing,  float, ?, , no, yes, Avg Share of Q1 Subsized HH Income Spent on Housing in 2015, is a percentage , fr AHS?
-q2_owner_2015_share_income_on_housing,  float, ?, , no, yes, Avg Share of Q2 Owner HH Income Spent on Housing in 2015, is a percentage , fr ACS analysis
-q2_renter_2015_share_income_on_housing,  float, ?, , no, yes, Avg Share of Q2 Regular Renter HH Income Spent on Housing in 2015, is a percentage , fr ACS analysis
-q2_rentcontrolled_2015_share_income_on_housing,  float, ?, , no, yes, Avg Share of Q2 Rent-Controlled Renter  HH Income Spent on Housing in 2015, is a percentage , fr ??
-q2_subsidized_2015_share_income_on_housing, float, ?, , no, yes, Avg Share of Q2 Subsized HH Income Spent on Housing in 2015, is a percentage , fr AHS?
-q3_owner_2015_share_income_on_housing,  float, ?, , no, yes, Avg Share of Q3 Owner HH Income Spent on Housing in 2015, is a percentage , fr ACS analysis
-q3_renter_2015_share_income_on_housing,  float, ?, , no, yes, Avg Share of Q3 Regular Renter HH Income Spent on Housing in 2015, is a percentage , fr ACS analysis
-q3_rentcontrolled_2015_share_income_on_housing,  float, ?, , no, yes, Avg Share of Q3 Rent-Controlled Renter  HH Income Spent on Housing in 2015, is a percentage , fr ??
-q3_subsidized_2015_share_income_on_housing, float, ?, , no, yes, Avg Share of Q3 Subsized HH Income Spent on Housing in 2015, is a percentage , fr AHS?
-q4_owner_2015_share_income_on_housing,  float, ?, , no, yes, Avg Share of Q4 Owner HH Income Spent on Housing in 2015, is a percentage , fr ACS analysis
-q4_renter_2015_share_income_on_housing,  float, ?, , no, yes, Avg Share of Q4 Regular Renter HH Income Spent on Housing in 2015, is a percentage , fr ACS analysis
-q4_rentcontrolled_2015_share_income_on_housing,  float, ?, , no, yes, Avg Share of Q4 Rent-Controlled Renter  HH Income Spent on Housing in 2015, is a percentage , fr ??
-q4_subsidized_2015_share_income_on_housing, float, ?, , no, yes, Avg Share of Q4 Subsized HH Income Spent on Housing in 2015, is a percentage , fr AHS?
+q1rdr_2015_share_income_on_housing, float, ?, , no, yes, Avg Share of Q1 Owner HH Income Spent on Housing in 2015, is a percentage , fr ACS analysis 
+q1odr_2015_share_income_on_housing, float, ?, , no, yes, Avg Share of Q1 Regular Renter HH Income Spent on Housing in 2015, is a percentage , fr ACS analysis
+q1rsu_2015_share_income_on_housing,  float, ?, , no, yes, Avg Share of Q1 Rent-Controlled Renter HH Income Spent on Housing in 2015, is a percentage , fr ??
+q1osu_2015_share_income_on_housing,  float, ?, , no, yes, Avg Share of Q1 Subsized HH Income Spent on Housing in 2015, is a percentage , fr AHS?
+q1rpc_2015_share_income_on_housing,  float, ?, , no, yes, Avg Share of Q2 Owner HH Income Spent on Housing in 2015, is a percentage , fr ACS analysis
+q1opc_2015_share_income_on_housing,  float, ?, , no, yes, Avg Share of Q2 Regular Renter HH Income Spent on Housing in 2015, is a percentage , fr ACS analysis
+q1rma_2015_share_income_on_housing,  float, ?, , no, yes, Avg Share of Q2 Rent-Controlled Renter  HH Income Spent on Housing in 2015, is a percentage , fr ??
+q1oma_2015_share_income_on_housing, float, ?, , no, yes, Avg Share of Q2 Subsized HH Income Spent on Housing in 2015, is a percentage , fr AHS?
+REPEATS FOR Q2 Q3 Q4, , , , , , , ,
 rent_controlled_units_2015, int, long, , no, yes, Total Count of Rent Controlled Units in BA in 2015,  , fr ??
 deed_restricted_units_2015, int, long, , no, yes, Total Count of Deed Restriced Low Income Units in the BA in 2015, , fr ??
 proportion_of_HHs_subsidized_2015, float, ?, , no, yes, Proportion of 2015 With Subsidized Housing Costs, is a proportion so between 0-1 , this is separate from deed restriced unit and fr AHS?
