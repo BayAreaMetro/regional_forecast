@@ -1,3 +1,0 @@
-rent_controlled_units_2015, int, long, , no, yes, Total Count of Rent Controlled Units in BA in 2015,  , fr ??
-deed_restricted_units_2015, int, long, , no, yes, Total Count of Deed Restriced Low Income Units in the BA in 2015, , fr ??
-proportion_of_HHs_subsidized_2015, float, ?, , no, yes, Proportion of 2015 With Subsidized Housing Costs, is a proportion so between 0-1 , this is separate from deed restriced unit and fr AHS?
