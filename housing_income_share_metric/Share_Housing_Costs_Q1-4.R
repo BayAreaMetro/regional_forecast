@@ -102,6 +102,7 @@ USERPROFILE     <- gsub("\\\\","/", Sys.getenv("USERPROFILE"))
 BOX_Urban       <- file.path(USERPROFILE, "Box", "Modeling and Surveys", "Urban Modeling")
 Urbansim_Runs   <- file.path(BOX_Urban, "Bay Area Urbansim 1.5", "PBA50", "Draft Blueprint runs")
 Analysis_Run    <- file.path(Urbansim_Runs,"Blueprint Basic (s21)","v1.5.1","v1.5.1.2 (to 2050)")
+County_2015_Loc <- file.path(Analysis_Run,"run56_county_summaries_2015.csv")
 County_2050_Loc <- file.path(Analysis_Run,"run56_county_summaries_2050.csv")
 
 # Import Libraries
@@ -124,25 +125,47 @@ CPI_ratio    <- CPI2015/CPI2000 # 2015 CPI/2000 CPI
 # Bring in other relevant files: Urbansim run, scenario specific parameters
 
 pums2015            <- read.csv(pums_2015_location,header=TRUE)
-county_2050         <- read.csv(County_2050_Loc,header=TRUE) %>% 
+
+county_2015         <- read.csv(County_2015_Loc,header=TRUE,stringsAsFactors = FALSE) %>% 
   summarize(HHINCQ1=sum(HHINCQ1),HHINCQ2=sum(HHINCQ2),HHINCQ3=sum(HHINCQ3),HHINCQ4=sum(HHINCQ4), 
             TOTHH=sum(TOTHH)) 
-scenario_params     <- read.csv(scenario_params_loc,header = TRUE)
+
+county_2050         <- read.csv(County_2050_Loc,header=TRUE,stringsAsFactors = FALSE) %>% 
+  summarize(HHINCQ1=sum(HHINCQ1),HHINCQ2=sum(HHINCQ2),HHINCQ3=sum(HHINCQ3),HHINCQ4=sum(HHINCQ4), 
+            TOTHH=sum(TOTHH)) 
+scenario_params     <- read.csv(scenario_params_loc,header = TRUE,stringsAsFactors = FALSE) 
 
 ## Fill in hh_proportion_matrix_2015 table
 
 shell=data.frame(hu_type=c("dr","su","pc","ma"),q1r=0,q1o=0,q2r=0,q2o=0,   # Create zero values for housing unit types to calculate later
-                 q3r=0,q3o=0,q4r=0,q4o=0,q1t=0,q2t=0,q3t=0,q4t=0)
+                 q3r=0,q3o=0,q4r=0,q4o=0)
 
-temp15p <- pums2015 %>%  # Populate 2015 housing totals by income and tenure, join with shell above
-  select(short_name,households) %>% 
-  spread(short_name,households) %>% 
-  mutate(hu_type="total") %>% 
+rent_share <- pums2015 %>%                         # Use PUMS data to distribute 2015 run quartiles by owner/renter
+  select(quartile,tenure, households) %>% 
+  spread(tenure,households) %>% mutate(
+    renter_share=Renter/Total) %>% 
+  select(quartile,renter_share) %>% 
+  spread(quartile,renter_share) %>% 
+  rename(q1renters=Quartile1,q2renters=Quartile2,q3renters=Quartile3,q4renters=Quartile4)
+  
+
+temp15p <- county_2015 %>%  # Populate 2015 housing totals by income and tenure, join with shell above
+  cbind(.,rent_share) %>% mutate(
+    hu_type="total",
+    q1r=round(HHINCQ1*q1renters),
+    q1o=HHINCQ1-q1r,
+    q2r=round(HHINCQ2*q2renters),
+    q2o=HHINCQ2-q2r,
+    q3r=round(HHINCQ3*q3renters),
+    q3o=HHINCQ3-q3r,
+    q4r=round(HHINCQ4*q4renters),
+    q4o=HHINCQ4-q4r) %>% 
+  select(hu_type,q1r,q1o,q2r,q2o,q3r,q3o,q4r,q4o)   %>% 
   rbind(shell,.) %>% mutate(                    # Add total columns for later calculations
     tr=q1r+q2r+q3r+q4r,                         # Create a column for total renters
     to=q1o+q2o+q3o+q4o,                         # Create a column for total owners
-    tt=q1t+q2t+q3t+q4t) %>%                     # Create a column for total units
-  select(-q1t,-q2t,-q3t,-q4t)                   # Remove a few unnecessary variables
+    tt=to+tr)                                   # Create a column for total units
+
 
 temp15p <- temp15p %>% mutate(  # Now fill in cells
   tt=case_when(
@@ -247,8 +270,9 @@ temp15i <- pums2015 %>%  # Populate 2015 share income spent, join with shell fro
   select(short_name,share_income) %>% 
   spread(short_name,share_income) %>% 
   mutate(hu_type="total") %>% 
-  rbind(shell,.) %>% 
-  select(-q1t,-q2t,-q3t,-q4t)                   # Remove a few unnecessary variables
+  select(-q1t,-q2t,-q3t,-q4t) %>%              # Remove a few unnecessary variables
+  rbind(shell,.) 
+
 
 temp15i <- temp15i %>% mutate(
   q1r=case_when(
@@ -295,7 +319,7 @@ temp15i <- temp15i %>% mutate(
 
 hh_income_matrix_2015 <- temp15i %>% mutate(
   q1r=case_when(
-    hu_type=="ma"        ~ ((full2015[5,"q1r"]*.[5,"q1r"])-
+    hu_type=="ma"        ~ ((full2015[5,"q1r"]*.[5,"q1r"])-            # Now use weighted average to determine market share of income spent
                               ((full2015[1,"q1r"]*.[1,"q1r"])+
                                  (full2015[2,"q1r"]*.[2,"q1r"])+
                                  (full2015[3,"q1r"]*.[3,"q1r"])))/
@@ -358,15 +382,19 @@ hh_income_matrix_2015 <- temp15i %>% mutate(
                                  full2015[4,"q4o"],
     TRUE                 ~ q4o),
 ) %>% 
-  filter(hu_type!="total") %>% 
-  mutate_if(is.numeric,round,3)
+  filter(hu_type!="total") %>%                          # Remove row for totals to match prescribed format
+  mutate_if(is.numeric,round,3)                         # Round to three decimal places
   
 
-# Bring in scenario-specific information
+# Bring in 2050 scenario-specific information
 
+for(i in 1:nrow(scenario_params)) {
+  if(scenario_params[i,"scenario"]==scenario){
+    rdr_2050=as.numeric(scenario_params[i,"rdr_units_2050"])
+    odr_2015=as.numeric(scenario_params[i,"odr_units_2050"])
+  }
+}
 
-
- 
   
 load (HH_RDATA) 
 
