@@ -4,7 +4,7 @@
 
 ### Set assumptions here for shares by housing type and income quartile:
 
-scenario = "s21"
+scenario = "s23"
 
 # Share of total households by unit type in 2015 (taken from 2010 values in below document)
 # dr=deed restricted, su=subsidized, pc=price controlled, ma=market
@@ -24,13 +24,13 @@ pcrent = 1.0    # Share of price controlled units that are rented (not owned)
 
 # Distribution across income quartiles for each rental unit type. Q1-Q4 shares should sum to 1 (100%) 
 
-drq1r = 0.5     # Deed restricted units, quartile 1, renters
-drq2r = 0.5     # Deed restricted units, quartile 2, renters
+drq1r = 1.0     # Deed restricted units, quartile 1, renters
+drq2r = 0.0     # Deed restricted units, quartile 2, renters
 drq3r = 0.0     # Deed restricted units, quartile 3, renters
 drq4r = 0.0     # Deed restricted units, quartile 4, renters
 
-suq1r = 0.5     # Subsidized households, quartile 1, renters
-suq2r = 0.5     # Subsidized households, quartile 2, renters
+suq1r = 1.0     # Subsidized households, quartile 1, renters
+suq2r = 0.0     # Subsidized households, quartile 2, renters
 suq3r = 0.0     # Subsidized households, quartile 3, renters
 suq4r = 0.0     # Subsidized households, quartile 4, renters
 
@@ -41,13 +41,13 @@ pcq4r = 0.0     # Price control units, quartile 4, renters
 
 # Share by income quartile for each owner unit type. Within each unit type, Q1-Q4 should sum to 1 (100%) 
 
-drq1o = 0.5     # Deed restricted units, quartile 1, owners
-drq2o = 0.5     # Deed restricted units, quartile 2, owners
+drq1o = 1.0     # Deed restricted units, quartile 1, owners
+drq2o = 0.0     # Deed restricted units, quartile 2, owners
 drq3o = 0.0     # Deed restricted units, quartile 3, owners
 drq4o = 0.0     # Deed restricted units, quartile 4, owners
 
-suq1o = 0.5     # Subsidized households, quartile 1, owners
-suq2o = 0.5     # Subsidized households, quartile 2, owners
+suq1o = 1.0     # Subsidized households, quartile 1, owners
+suq2o = 0.0     # Subsidized households, quartile 2, owners
 suq3o = 0.0     # Subsidized households, quartile 3, owners
 suq4o = 0.0     # Subsidized households, quartile 4, owners
 
@@ -101,10 +101,10 @@ scenario_params_loc <- paste0(github_location,"scenario_specific_parameters.csv"
 USERPROFILE     <- gsub("\\\\","/", Sys.getenv("USERPROFILE"))
 BOX_Urban       <- file.path(USERPROFILE, "Box", "Modeling and Surveys", "Urban Modeling")
 Urbansim_Runs   <- file.path(BOX_Urban, "Bay Area Urbansim 1.5", "PBA50", "Draft Blueprint runs")
-Analysis_Run    <- file.path(Urbansim_Runs,"Blueprint Basic (s21)","v1.5.1","v1.5.1.2 (to 2050)")
-County_2015_Loc <- file.path(Analysis_Run,"run56_county_summaries_2015.csv")
-County_2050_Loc <- file.path(Analysis_Run,"run56_county_summaries_2050.csv")
-
+Analysis_Run    <- file.path(Urbansim_Runs,"Blueprint Plus Crossing (s23)","v1.5.2")
+County_2015_Loc <- file.path(Analysis_Run,"run72_county_summaries_2015.csv")
+County_2050_Loc <- file.path(Analysis_Run,"run72_county_summaries_2050.csv")
+ 
 # Import Libraries
 
 suppressMessages(library(tidyverse))
