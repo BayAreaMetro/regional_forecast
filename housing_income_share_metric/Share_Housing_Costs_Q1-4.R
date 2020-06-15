@@ -6,7 +6,7 @@
 
 scenario = "s21"
 
-# Share of total households by unit type
+# Share of total households by unit type in 2015 (taken from 2010 values in below document)
 # dr=deed restricted, su=subsidized, pc=price controlled, ma=market
 
 drshare = 0.044  # From "2019 08 29 Housing Costs Forecast Model.xlsx": https://mtcdrive.app.box.com/file/515836887426
@@ -179,8 +179,8 @@ temp15p <- temp15p %>% mutate(  # Now fill in cells
     hu_type=="dr"        ~   tt*drrent,                 # Calculate 2105 housing unit types into rented 
     hu_type=="su"        ~   tt*surent,
     hu_type=="pc"        ~   tt*pcrent,
-    TRUE                 ~   tr),                       # Owned unit by housing unit type is total-rented
-  to=tt-tr)
+    TRUE                 ~   tr))                       # Owned unit by housing unit type is total-rented
+
 
 temp15p <- temp15p %>% mutate(
   q1r=case_when(
@@ -228,7 +228,7 @@ temp15p <- temp15p %>% mutate(
 
 # Subtract sum of values for dr,su, and pc units from total to yield market-rate unit cells
 
-full2015 <- temp15p %>% mutate(
+full_2015 <- temp15p %>% mutate(
   tr=case_when(
     hu_type=="ma"        ~ .[5,"tr"]-(.[1,"tr"] + .[2,"tr"] + .[3,"tr"]),
     TRUE                 ~ tr
@@ -257,11 +257,12 @@ full2015 <- temp15p %>% mutate(
   q4o=case_when(
     hu_type=="ma"        ~ .[5,"q4o"]-(.[1,"q4o"] + .[2,"q4o"] + .[3,"q4o"]),
     TRUE                 ~ q4o)
-) %>% 
-  select(-tr,-to,-tt)                          # Remove variables to match prescribed format
+) %>% mutate(
+  to=tt-tr)
   
-hh_proportion_matrix_2015 <- full2015 %>% 
-  filter(hu_type!="total")                     # Remove total row to match prescribed format
+hh_proportion_matrix_2015 <- full_2015 %>% 
+  filter(hu_type!="total") %>%                 # Remove total row to match prescribed format
+  select(-tr,-to,-tt)                          # Remove variables to match prescribed format
 
   
 ## Fill in hh_income_matrix_2015 table
@@ -319,67 +320,67 @@ temp15i <- temp15i %>% mutate(
 
 hh_income_matrix_2015 <- temp15i %>% mutate(
   q1r=case_when(
-    hu_type=="ma"        ~ ((full2015[5,"q1r"]*.[5,"q1r"])-            # Now use weighted average to determine market share of income spent
-                              ((full2015[1,"q1r"]*.[1,"q1r"])+
-                                 (full2015[2,"q1r"]*.[2,"q1r"])+
-                                 (full2015[3,"q1r"]*.[3,"q1r"])))/
-                                 full2015[4,"q1r"],
+    hu_type=="ma"        ~ ((full_2015[5,"q1r"]*.[5,"q1r"])-            # Now use weighted average to determine market share of income spent
+                              ((full_2015[1,"q1r"]*.[1,"q1r"])+
+                                 (full_2015[2,"q1r"]*.[2,"q1r"])+
+                                 (full_2015[3,"q1r"]*.[3,"q1r"])))/
+                                 full_2015[4,"q1r"],
     TRUE                 ~ q1r),
   
   q2r=case_when(
-    hu_type=="ma"        ~ ((full2015[5,"q2r"]*.[5,"q2r"])-
-                              ((full2015[1,"q2r"]*.[1,"q2r"])+
-                                 (full2015[2,"q2r"]*.[2,"q2r"])+
-                                 (full2015[3,"q2r"]*.[3,"q2r"])))/
-                                 full2015[4,"q2r"],
+    hu_type=="ma"        ~ ((full_2015[5,"q2r"]*.[5,"q2r"])-
+                              ((full_2015[1,"q2r"]*.[1,"q2r"])+
+                                 (full_2015[2,"q2r"]*.[2,"q2r"])+
+                                 (full_2015[3,"q2r"]*.[3,"q2r"])))/
+                                 full_2015[4,"q2r"],
     TRUE                 ~ q2r),
   
   q3r=case_when(
-    hu_type=="ma"        ~ ((full2015[5,"q3r"]*.[5,"q3r"])-
-                              ((full2015[1,"q3r"]*.[1,"q3r"])+
-                                 (full2015[2,"q3r"]*.[2,"q3r"])+
-                                 (full2015[3,"q3r"]*.[3,"q3r"])))/
-                                 full2015[4,"q3r"],
+    hu_type=="ma"        ~ ((full_2015[5,"q3r"]*.[5,"q3r"])-
+                              ((full_2015[1,"q3r"]*.[1,"q3r"])+
+                                 (full_2015[2,"q3r"]*.[2,"q3r"])+
+                                 (full_2015[3,"q3r"]*.[3,"q3r"])))/
+                                 full_2015[4,"q3r"],
     TRUE                 ~ q3r),
 
   q4r=case_when(
-    hu_type=="ma"        ~ ((full2015[5,"q4r"]*.[5,"q4r"])-
-                              ((full2015[1,"q4r"]*.[1,"q4r"])+
-                                 (full2015[2,"q4r"]*.[2,"q4r"])+
-                                 (full2015[3,"q4r"]*.[3,"q4r"])))/
-                                 full2015[4,"q4r"],
+    hu_type=="ma"        ~ ((full_2015[5,"q4r"]*.[5,"q4r"])-
+                              ((full_2015[1,"q4r"]*.[1,"q4r"])+
+                                 (full_2015[2,"q4r"]*.[2,"q4r"])+
+                                 (full_2015[3,"q4r"]*.[3,"q4r"])))/
+                                 full_2015[4,"q4r"],
     TRUE                 ~ q4r),
   
   q1o=case_when(
-    hu_type=="ma"        ~ ((full2015[5,"q1o"]*.[5,"q1o"])-
-                              ((full2015[1,"q1o"]*.[1,"q1o"])+
-                                 (full2015[2,"q1o"]*.[2,"q1o"])+
-                                 (full2015[3,"q1o"]*.[3,"q1o"])))/
-                                 full2015[4,"q1o"],
+    hu_type=="ma"        ~ ((full_2015[5,"q1o"]*.[5,"q1o"])-
+                              ((full_2015[1,"q1o"]*.[1,"q1o"])+
+                                 (full_2015[2,"q1o"]*.[2,"q1o"])+
+                                 (full_2015[3,"q1o"]*.[3,"q1o"])))/
+                                 full_2015[4,"q1o"],
     TRUE                 ~ q1o),
   
   q2o=case_when(
-    hu_type=="ma"        ~ ((full2015[5,"q2o"]*.[5,"q2o"])-
-                              ((full2015[1,"q2o"]*.[1,"q2o"])+
-                                 (full2015[2,"q2o"]*.[2,"q2o"])+
-                                 (full2015[3,"q2o"]*.[3,"q2o"])))/
-                                 full2015[4,"q2o"],
+    hu_type=="ma"        ~ ((full_2015[5,"q2o"]*.[5,"q2o"])-
+                              ((full_2015[1,"q2o"]*.[1,"q2o"])+
+                                 (full_2015[2,"q2o"]*.[2,"q2o"])+
+                                 (full_2015[3,"q2o"]*.[3,"q2o"])))/
+                                 full_2015[4,"q2o"],
     TRUE                 ~ q2o),
   
   q3o=case_when(
-    hu_type=="ma"        ~ ((full2015[5,"q3o"]*.[5,"q3o"])-
-                              ((full2015[1,"q3o"]*.[1,"q3o"])+
-                                 (full2015[2,"q3o"]*.[2,"q3o"])+
-                                 (full2015[3,"q3o"]*.[3,"q3o"])))/
-                                 full2015[4,"q3o"],
+    hu_type=="ma"        ~ ((full_2015[5,"q3o"]*.[5,"q3o"])-
+                              ((full_2015[1,"q3o"]*.[1,"q3o"])+
+                                 (full_2015[2,"q3o"]*.[2,"q3o"])+
+                                 (full_2015[3,"q3o"]*.[3,"q3o"])))/
+                                 full_2015[4,"q3o"],
     TRUE                 ~ q3o),
   
   q4o=case_when(
-    hu_type=="ma"        ~ ((full2015[5,"q4o"]*.[5,"q4o"])-
-                              ((full2015[1,"q4o"]*.[1,"q4o"])+
-                                 (full2015[2,"q4o"]*.[2,"q4o"])+
-                                 (full2015[3,"q4o"]*.[3,"q4o"])))/
-                                 full2015[4,"q4o"],
+    hu_type=="ma"        ~ ((full_2015[5,"q4o"]*.[5,"q4o"])-
+                              ((full_2015[1,"q4o"]*.[1,"q4o"])+
+                                 (full_2015[2,"q4o"]*.[2,"q4o"])+
+                                 (full_2015[3,"q4o"]*.[3,"q4o"])))/
+                                 full_2015[4,"q4o"],
     TRUE                 ~ q4o),
 ) %>% 
   filter(hu_type!="total") %>%                          # Remove row for totals to match prescribed format
@@ -391,67 +392,178 @@ hh_income_matrix_2015 <- temp15i %>% mutate(
 for(i in 1:nrow(scenario_params)) {
   if(scenario_params[i,"scenario"]==scenario){
     rdr_2050=as.numeric(scenario_params[i,"rdr_units_2050"])
-    odr_2015=as.numeric(scenario_params[i,"odr_units_2050"])
+    odr_2050=as.numeric(scenario_params[i,"odr_units_2050"])
+    rpc_2050=as.numeric(scenario_params[i,"total_rpc_units_2050"]) 	
+    opc_2050=as.numeric(scenario_params[i,"total_rpc_units_2050"]) 	
+    price_2050_to_2015=as.numeric(scenario_params[i,"avg_hu_price_ratio_2050_to_2015"])
   }
 }
 
-  
-load (HH_RDATA) 
+## Populate 2050 tables
 
-household <- hbayarea15 %>% 
-  filter(!is.na(TEN) & TEN!=4) %>% 
-  mutate(
-    adjustedinc=HINCP*(ADJINC/1000000), 
-    persons=case_when(
-      NP>8L   ~8L,
-      TRUE   ~NP
-    )
-  ) %>% 
-#  group_by(persons) %>% 
-  summarize(median_2015=wtd.quantile(adjustedinc,q=0.5,weight=WGTP)) %>% mutate(
-    median_2010=median_2015/CPI_ratio,
-    ELI_2015=(0.3*median_2015), 
-    VLI_2015=(0.5*median_2015),
-    ELI_2000=(0.3*median_2015)/CPI_ratio, 
-    VLI_2000=(0.5*median_2015)/CPI_ratio
-    ) %>% 
-  mutate_if(is.numeric,round,0)
+temp50p <- county_2050 %>%  # Populate 2050 housing totals by income and tenure, join with shell above
+  cbind(.,rent_share) %>% mutate(       # Join renter shares from PUMS 2015
+    hu_type="total",
+    q1r=round(HHINCQ1*q1renters),       # Apply renter share   
+    q1o=HHINCQ1-q1r,                    # Owners are 2050 Q1 HHs minus Q1 renters
+    q2r=round(HHINCQ2*q2renters),
+    q2o=HHINCQ2-q2r,
+    q3r=round(HHINCQ3*q3renters),
+    q3o=HHINCQ3-q3r,
+    q4r=round(HHINCQ4*q4renters),
+    q4o=HHINCQ4-q4r) %>% 
+  select(hu_type,q1r,q1o,q2r,q2o,q3r,q3o,q4r,q4o)   %>% 
+  rbind(shell,.) %>% mutate(                    # Add total columns for later calculations
+    tr=q1r+q2r+q3r+q4r,                         # Create a column for total renters
+    to=q1o+q2o+q3o+q4o,                         # Create a column for total owners
+    tt=to+tr)                                   # Create a column for total units
 
-print(household)
-
-# Recode data
-
-Q4 <- hbayarea15 %>% 
-  filter(TEN!=4) %>% mutate(                          # Remove occupied without payment of rent
-  adjustedinc=HINCP*(ADJINC/1000000),                 #Adjusted income to constant 2015$ 
-  tenure=case_when(
-    TEN==1     ~ "Owner",                             # Owned with a mortgage
-    TEN==2     ~ "Owner",                             # Owned free and clear
-    TEN==3     ~ "Renter"                            # Rented
+temp50p <- temp50p %>% mutate(  # Now fill in cells
+  tr=case_when(
+    hu_type=="dr"        ~   rdr_2050,                 # Apply 2050 values from Scenario-Specific Values
+    hu_type=="su"        ~   round((full_2015[2,"tr"]/full_2015[5,"tr"])*
+                             county_2050[1,"TOTHH"]),  # Apply proportion from 2015 to 2050 su totals
+    hu_type=="pc"        ~   rpc_2050,
+    TRUE                 ~   tr),                     
+  to=case_when(
+    hu_type=="dr"        ~   odr_2050,                 # Apply 2050 values from Scenario-Specific Values
+    hu_type=="su"        ~   round((full_2015[2,"to"]/full_2015[5,"to"])*
+                                     county_2050[1,"TOTHH"]),
+    hu_type=="pc"        ~   opc_2050,
+    TRUE                 ~   to), 
   )
-  ) %>% 
-  filter(!is.na(TEN) & adjustedinc>=Q4_threshold) %>% # Keep cases that are not GQ/vacant and are above inflated Q4 threshold    
-  select(PUMA,PUMA_Name,HINCP,ADJINC, TEN,adjustedinc,tenure,WGTP)  # Select out relevant variables
 
-# Summarize by tenure, then total, concatenate for a final dataset
+temp50p <- temp50p %>% mutate(
+  q1r=case_when(
+    hu_type=="dr"        ~   tr*drq1r,                  # Split totals for housing unit type (by rent/own) into income quartiles
+    hu_type=="su"        ~   tr*suq1r,                  # Factors used are the assumptions asserted at the top
+    hu_type=="pc"        ~   tr*pcq1r,
+    TRUE                 ~   q1r),
+  q2r=case_when(
+    hu_type=="dr"        ~   tr*drq2r,
+    hu_type=="su"        ~   tr*suq2r,
+    hu_type=="pc"        ~   tr*pcq2r,
+    TRUE                 ~   q2r),
+  q3r=case_when(
+    hu_type=="dr"        ~   tr*drq3r,
+    hu_type=="su"        ~   tr*suq3r,
+    hu_type=="pc"        ~   tr*pcq3r,
+    TRUE                 ~   q3r),
+  q4r=case_when(
+    hu_type=="dr"        ~   tr*drq4r,
+    hu_type=="su"        ~   tr*suq4r,
+    hu_type=="pc"        ~   tr*pcq4r,
+    TRUE                 ~   q4r),
+  q1o=case_when(
+    hu_type=="dr"        ~   to*drq1o,
+    hu_type=="su"        ~   to*suq1o,
+    hu_type=="pc"        ~   to*pcq1o,
+    TRUE                 ~   q1o),
+  q2o=case_when(
+    hu_type=="dr"        ~   to*drq2o,
+    hu_type=="su"        ~   to*suq2o,
+    hu_type=="pc"        ~   to*pcq2o,
+    TRUE                 ~   q2o),
+  q3o=case_when(
+    hu_type=="dr"        ~   to*drq3o,
+    hu_type=="su"        ~   to*suq3o,
+    hu_type=="pc"        ~   to*pcq3o,
+    TRUE                 ~   q3o),
+  q4o=case_when(
+    hu_type=="dr"        ~   to*drq4o,
+    hu_type=="su"        ~   to*suq4o,
+    hu_type=="pc"        ~   to*pcq4o,
+    TRUE                 ~   q4o)
+) %>% 
+  mutate_if(is.numeric,round,0) 
 
-Q4_tenure <- Q4 %>% 
-  group_by(tenure) %>% 
-  summarize(mean_income_2015dollars=weighted.mean(adjustedinc,WGTP))
+full_2050 <- temp50p %>% mutate(
+  q1r=case_when(
+    hu_type=="ma"        ~ .[5,"q1r"]-(.[1,"q1r"] + .[2,"q1r"] + .[3,"q1r"]),
+    TRUE                 ~ q1r),
+  q2r=case_when(
+    hu_type=="ma"        ~ .[5,"q2r"]-(.[1,"q2r"] + .[2,"q2r"] + .[3,"q2r"]),
+    TRUE                 ~ q2r),
+  q3r=case_when(
+    hu_type=="ma"        ~ .[5,"q3r"]-(.[1,"q3r"] + .[2,"q3r"] + .[3,"q3r"]),
+    TRUE                 ~ q3r),
+  q4r=case_when(
+    hu_type=="ma"        ~ .[5,"q4r"]-(.[1,"q4r"] + .[2,"q4r"] + .[3,"q4r"]),
+    TRUE                 ~ q4r),
+  q1o=case_when(
+    hu_type=="ma"        ~ .[5,"q1o"]-(.[1,"q1o"] + .[2,"q1o"] + .[3,"q1o"]),
+    TRUE                 ~ q1o),
+  q2o=case_when(
+    hu_type=="ma"        ~ .[5,"q2o"]-(.[1,"q2o"] + .[2,"q2o"] + .[3,"q2o"]),
+    TRUE                 ~ q2o),
+  q3o=case_when(
+    hu_type=="ma"        ~ .[5,"q3o"]-(.[1,"q3o"] + .[2,"q3o"] + .[3,"q3o"]),
+    TRUE                 ~ q3o),
+  q4o=case_when(
+    hu_type=="ma"        ~ .[5,"q4o"]-(.[1,"q4o"] + .[2,"q4o"] + .[3,"q4o"]),
+    TRUE                 ~ q4o),
+  tr=case_when(
+    hu_type=="ma"        ~ .[5,"tr"]-(.[1,"tr"] + .[2,"tr"] + .[3,"tr"]),
+    TRUE                 ~ tr),
+  to=case_when(
+    hu_type=="ma"        ~ .[5,"to"]-(.[1,"to"] + .[2,"to"] + .[3,"to"]),
+    TRUE                 ~ to)) %>% 
+  mutate(tt=to+tr)
 
-Q4_total <- Q4 %>% 
-  summarize(mean_income_2015dollars=weighted.mean(adjustedinc,WGTP))
+hh_proportion_matrix_2050 <- full_2050 %>% 
+  filter(hu_type!="total") %>%                 # Remove total row to match prescribed format
+  select(-tr,-to,-tt)                          # Remove variables to match prescribed format
 
-temp <- data.frame("tenure"="Total")
-temp_join <- cbind(temp,Q4_total)  
-final <- rbind(Q4_tenure,temp_join) %>% mutate(
-  mean_income_2000dollars=mean_income_2015dollars/CPI_ratio
-)
+## Fill in hh_income_matrix_2050 table
+
+# Start w/ 2015, make changes indicated by Forecasting Income Share Spent on Housing in 2050 memo
+
+hh_income_matrix_2050     <- hh_income_matrix_2015 %>% mutate(
+  q1r=case_when(
+    hu_type=="dr"        ~   q1r,                
+    hu_type=="su"        ~   q1r,                  
+    hu_type=="pc"        ~   q1r*price_2050_to_2015,
+    hu_type=="ma"        ~   q1r*price_2050_to_2015),
+  q2r=case_when(
+    hu_type=="dr"        ~   q2r,                
+    hu_type=="su"        ~   q2r,                  
+    hu_type=="pc"        ~   q2r*price_2050_to_2015,
+    hu_type=="ma"        ~   q2r*price_2050_to_2015),
+  q3r=case_when(
+    hu_type=="dr"        ~   q3r,                
+    hu_type=="su"        ~   q3r,                  
+    hu_type=="pc"        ~   q3r*price_2050_to_2015,
+    hu_type=="ma"        ~   q3r*price_2050_to_2015),
+  q4r=case_when(
+    hu_type=="dr"        ~   q4r,                
+    hu_type=="su"        ~   q4r,                  
+    hu_type=="pc"        ~   q4r*price_2050_to_2015,
+    hu_type=="ma"        ~   q4r*price_2050_to_2015),
+  q1o=case_when(
+    hu_type=="dr"        ~   q1o,
+    hu_type=="su"        ~   q1o,
+    hu_type=="pc"        ~   q1o,
+    hu_type=="ma"        ~   q1o*price_2050_to_2015),
+  q2o=case_when(
+    hu_type=="dr"        ~   q2o,
+    hu_type=="su"        ~   q2o,
+    hu_type=="pc"        ~   q2o,
+    hu_type=="ma"        ~   q2o*price_2050_to_2015),
+  q3o=case_when(
+    hu_type=="dr"        ~   q3o,
+    hu_type=="su"        ~   q3o,
+    hu_type=="pc"        ~   q3o,
+    hu_type=="ma"        ~   q3o*price_2050_to_2015),
+  q4o=case_when(
+    hu_type=="dr"        ~   q4o,
+    hu_type=="su"        ~   q4o,
+    hu_type=="pc"        ~   q4o,
+    hu_type=="ma"        ~   q4o*price_2050_to_2015)
+) %>% 
+  mutate_if(is.numeric,round,3)
+  
 
 # Export
 
-write.csv(final,file="ACS PUMS 2015 Q4 Mean Income by Tenure.csv",row.names = FALSE,quote=TRUE)
+#write.csv(final,file="ACS PUMS 2015 Q4 Mean Income by Tenure.csv",row.names = FALSE,quote=TRUE)
 
-trial <- temp15i %>% mutate(
-  value=full2015[5,"q1r"]-(full2015[1,"q1r"]*.[1,"q1r"]+full2015[2,"q1r"]*.[2,"q1r"]+
-                              full2015[3,"q1r"]*.[3,"q1r"])/full2015[4,q1r])
