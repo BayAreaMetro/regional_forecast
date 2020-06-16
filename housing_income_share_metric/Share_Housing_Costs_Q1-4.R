@@ -640,7 +640,18 @@ w_q4o=((hh_income_matrix_2050[1,"q4o"]*full_2050[1,"q4o"])+(hh_income_matrix_205
          (hh_income_matrix_2050[3,"q4o"]*full_2050[3,"q4o"])+(hh_income_matrix_2050[4,"q4o"]*full_2050[4,"q4o"]))/
          full_2050[5,"q4o"]
 
-w_temp <- data.frame(hu_type="total",w_q1r,w_q2r,w_q3r,w_q4r,w_q1o,w_q2o,w_q3o,w_q4o,)
+w_q1    =((w_q1r*full_2050[5,"q1r"])+(w_q1o*full_2050[5,"q1o"]))/(full_2050[5,"q1r"]+full_2050[5,"q1o"])
+w_q2    =((w_q2r*full_2050[5,"q2r"])+(w_q2o*full_2050[5,"q2o"]))/(full_2050[5,"q2r"]+full_2050[5,"q2o"])
+w_q3    =((w_q3r*full_2050[5,"q3r"])+(w_q3o*full_2050[5,"q3o"]))/(full_2050[5,"q3r"]+full_2050[5,"q3o"])
+w_q4    =((w_q4r*full_2050[5,"q4r"])+(w_q4o*full_2050[5,"q4o"]))/(full_2050[5,"q4r"]+full_2050[5,"q4o"])
+w_q1_q2 =((w_q1*(full_2050[5,"q1r"]+full_2050[5,"q1o"]))+(w_q2*(full_2050[5,"q2r"]+full_2050[5,"q2o"])))/
+         (full_2050[5,"q1r"]+full_2050[5,"q1o"]+full_2050[5,"q2r"]+full_2050[5,"q2o"])
+w_all   =((w_q1*(full_2050[5,"q1r"]+full_2050[5,"q1o"]))+(w_q2*(full_2050[5,"q2r"]+full_2050[5,"q2o"]))+
+            (w_q3*(full_2050[5,"q3r"]+full_2050[5,"q3o"]))+(w_q4*(full_2050[5,"q4r"]+full_2050[5,"q4o"])))/
+            full_2050[5,"tt"]
+
+income_share <- data.frame(hu_type="total",w_q1r,w_q1o,w_q2r,w_q2o,w_q3r,w_q3o,w_q4r,w_q4o,w_q1,w_q2,w_q3,w_q4,
+                           w_q1_q2,w_all)
   
 
 # Export
