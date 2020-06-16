@@ -442,7 +442,7 @@ for(i in 1:nrow(scenario_params)) {
     price_2050_to_2015=as.numeric(scenario_params[i,"avg_hu_price_ratio_2050_to_2015"])
   }
 }
-
+ 
 ## Populate 2050 tables
 
 temp50p <- county_2050 %>%  # Populate 2050 housing totals by income and tenure, join with shell above
@@ -656,5 +656,6 @@ income_share <- data.frame(hu_type="total",w_q1r,w_q1o,w_q2r,w_q2o,w_q3r,w_q3o,w
 
 # Export
 
-#write.csv(final,file="ACS PUMS 2015 Q4 Mean Income by Tenure.csv",row.names = FALSE,quote=TRUE)
+write.csv(income_share,file="2050 Share of Income Spent on Housing.csv",row.names = FALSE,quote=TRUE)
+write.csv(pums2015,file="2015 Share of Income Spent on Housing.csv",row.names = FALSE,quote=TRUE)
 
