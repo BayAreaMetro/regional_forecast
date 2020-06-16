@@ -68,10 +68,10 @@ suq2incr = 0.29     # Subsidized households, quartile 2, renters
 suq3incr = 0.29     # Subsidized households, quartile 3, renters
 suq4incr = 0.29     # Subsidized households, quartile 4, renters
 
-pcq1incr = 0.5     # Price control units, quartile 1, renters
-pcq2incr = 0.4     # Price control units, quartile 2, renters
-pcq3incr = 0.3     # Price control units, quartile 3, renters
-pcq4incr = 0.2     # Price control units, quartile 4, renters
+pc_fac1r = 0.857    # Factor converting market share of income to price control (pc_share=ma_share*0.857) for renters
+pc_fac2r = 0.857    # Factor converting market share of income to price control (pc_share=ma_share*0.857) for renters
+pc_fac3r = 0.857    # Factor converting market share of income to price control (pc_share=ma_share*0.857) for renters
+pc_fac4r = 0.857    # Factor converting market share of income to price control (pc_share=ma_share*0.857) for renters
 
 # Share of income spent on housing for owners
 
@@ -89,6 +89,11 @@ pcq1inco = 0.5     # Price control units, quartile 1, owners
 pcq2inco = 0.4     # Price control units, quartile 2, owners
 pcq3inco = 0.3     # Price control units, quartile 3, owners
 pcq4inco = 0.2     # Price control units, quartile 4, owners
+
+pc_fac1o = 0.857    # Factor converting market share of income to price control (pc_share=ma_share*0.857) for owners
+pc_fac2o = 0.857    # Factor converting market share of income to price control (pc_share=ma_share*0.857) for owners
+pc_fac3o = 0.857    # Factor converting market share of income to price control (pc_share=ma_share*0.857) for owners
+pc_fac4o = 0.857    # Factor converting market share of income to price control (pc_share=ma_share*0.857) for owners
 
 ### End assumptions
 
@@ -279,44 +284,49 @@ temp15i <- temp15i %>% mutate(
   q1r=case_when(
     hu_type=="dr"        ~   drq1incr,                  # Split totals for housing unit type (by rent/own) into income quartiles
     hu_type=="su"        ~   suq1incr,                  # Factors used are the assumptions asserted at the top
-    hu_type=="pc"        ~   pcq1incr,
     TRUE                 ~   q1r),
   q2r=case_when(
     hu_type=="dr"        ~   drq2incr,
     hu_type=="su"        ~   suq2incr,
-    hu_type=="pc"        ~   pcq2incr,
     TRUE                 ~   q2r),
   q3r=case_when(
     hu_type=="dr"        ~   drq3incr,
     hu_type=="su"        ~   suq3incr,
-    hu_type=="pc"        ~   pcq3incr,
     TRUE                 ~   q3r),
   q4r=case_when(
     hu_type=="dr"        ~   drq4incr,
     hu_type=="su"        ~   suq4incr,
-    hu_type=="pc"        ~   pcq4incr,
     TRUE                 ~   q4r),
   q1o=case_when(
     hu_type=="dr"        ~   drq1inco,
     hu_type=="su"        ~   suq1inco,
-    hu_type=="pc"        ~   pcq1inco,
     TRUE                 ~   q1o),
   q2o=case_when(
     hu_type=="dr"        ~   drq2inco,
     hu_type=="su"        ~   suq2inco,
-    hu_type=="pc"        ~   pcq2inco,
     TRUE                 ~   q2o),
   q3o=case_when(
     hu_type=="dr"        ~   drq3inco,
     hu_type=="su"        ~   suq3inco,
-    hu_type=="pc"        ~   pcq3inco,
     TRUE                 ~   q3o),
   q4o=case_when(
     hu_type=="dr"        ~   drq4inco,
     hu_type=="su"        ~   suq4inco,
-    hu_type=="pc"        ~   pcq4inco,
     TRUE                 ~   q4o)
 ) 
+
+# Now calculate 2015 market share of income spent on housing (requires flexing your 8th grade algebra skills) 
+"
+Starting with equation to get weighted average of housing unit types: 'share' is share of income paid and 'count'
+is count of units of that type (by income quartile and tenure):
+
+(dr_count*dr_share*)+(su_count*su_share)+(pc_count*pc_share)+(ma_count*ma_share)=(total_count*total_share)
+
+Substituting ma_share*pc_fac[income quartile,tenure] for pc_share and manipulating the variables:
+
+ma_share=((total_count*total_share)-((dr_count*dr_share)+(su_count*su_share)))/((pc_count*pc_fac)+ma_count)
+"
+#ma_share=((total_count*total_share)-((dr_count*dr_share)+(su_count*su_share)))/ ((pc_count*pc_fac)+ma_count)
 
 hh_income_matrix_2015 <- temp15i %>% mutate(
   q1r=case_when(
@@ -324,65 +334,99 @@ hh_income_matrix_2015 <- temp15i %>% mutate(
                               ((full_2015[1,"q1r"]*.[1,"q1r"])+
                                  (full_2015[2,"q1r"]*.[2,"q1r"])+
                                  (full_2015[3,"q1r"]*.[3,"q1r"])))/
-                                 full_2015[4,"q1r"],
+                                 ((full_2015[3,"q1r"]*pc_fac1r)+full_2015[4,"q1r"]),
     TRUE                 ~ q1r),
   
   q2r=case_when(
-    hu_type=="ma"        ~ ((full_2015[5,"q2r"]*.[5,"q2r"])-
+    hu_type=="ma"        ~ ((full_2015[5,"q2r"]*.[5,"q2r"])-            # Now use weighted average to determine market share of income spent
                               ((full_2015[1,"q2r"]*.[1,"q2r"])+
                                  (full_2015[2,"q2r"]*.[2,"q2r"])+
                                  (full_2015[3,"q2r"]*.[3,"q2r"])))/
-                                 full_2015[4,"q2r"],
+                                 ((full_2015[3,"q2r"]*pc_fac2r)+full_2015[4,"q2r"]),
     TRUE                 ~ q2r),
   
   q3r=case_when(
-    hu_type=="ma"        ~ ((full_2015[5,"q3r"]*.[5,"q3r"])-
+    hu_type=="ma"        ~ ((full_2015[5,"q3r"]*.[5,"q3r"])-            # Now use weighted average to determine market share of income spent
                               ((full_2015[1,"q3r"]*.[1,"q3r"])+
                                  (full_2015[2,"q3r"]*.[2,"q3r"])+
                                  (full_2015[3,"q3r"]*.[3,"q3r"])))/
-                                 full_2015[4,"q3r"],
+                                 ((full_2015[3,"q3r"]*pc_fac3r)+full_2015[4,"q3r"]),
     TRUE                 ~ q3r),
 
   q4r=case_when(
-    hu_type=="ma"        ~ ((full_2015[5,"q4r"]*.[5,"q4r"])-
+    hu_type=="ma"        ~ ((full_2015[5,"q4r"]*.[5,"q4r"])-            # Now use weighted average to determine market share of income spent
                               ((full_2015[1,"q4r"]*.[1,"q4r"])+
                                  (full_2015[2,"q4r"]*.[2,"q4r"])+
                                  (full_2015[3,"q4r"]*.[3,"q4r"])))/
-                                 full_2015[4,"q4r"],
+                                 ((full_2015[3,"q4r"]*pc_fac4r)+full_2015[4,"q4r"]),
     TRUE                 ~ q4r),
   
   q1o=case_when(
-    hu_type=="ma"        ~ ((full_2015[5,"q1o"]*.[5,"q1o"])-
+    hu_type=="ma"        ~ ((full_2015[5,"q1o"]*.[5,"q1o"])-            # Now use weighted average to determine market share of income spent
                               ((full_2015[1,"q1o"]*.[1,"q1o"])+
                                  (full_2015[2,"q1o"]*.[2,"q1o"])+
                                  (full_2015[3,"q1o"]*.[3,"q1o"])))/
-                                 full_2015[4,"q1o"],
+                                 ((full_2015[3,"q1o"]*pc_fac1o)+full_2015[4,"q1o"]),
     TRUE                 ~ q1o),
   
   q2o=case_when(
-    hu_type=="ma"        ~ ((full_2015[5,"q2o"]*.[5,"q2o"])-
+    hu_type=="ma"        ~ ((full_2015[5,"q2o"]*.[5,"q2o"])-            # Now use weighted average to determine market share of income spent
                               ((full_2015[1,"q2o"]*.[1,"q2o"])+
                                  (full_2015[2,"q2o"]*.[2,"q2o"])+
                                  (full_2015[3,"q2o"]*.[3,"q2o"])))/
-                                 full_2015[4,"q2o"],
+                                 ((full_2015[3,"q2o"]*pc_fac2o)+full_2015[4,"q2o"]),
     TRUE                 ~ q2o),
   
   q3o=case_when(
-    hu_type=="ma"        ~ ((full_2015[5,"q3o"]*.[5,"q3o"])-
+    hu_type=="ma"        ~ ((full_2015[5,"q3o"]*.[5,"q3o"])-            # Now use weighted average to determine market share of income spent
                               ((full_2015[1,"q3o"]*.[1,"q3o"])+
                                  (full_2015[2,"q3o"]*.[2,"q3o"])+
                                  (full_2015[3,"q3o"]*.[3,"q3o"])))/
-                                 full_2015[4,"q3o"],
+                                 ((full_2015[3,"q3o"]*pc_fac3o)+full_2015[4,"q3o"]),
     TRUE                 ~ q3o),
   
   q4o=case_when(
-    hu_type=="ma"        ~ ((full_2015[5,"q4o"]*.[5,"q4o"])-
+    hu_type=="ma"        ~ ((full_2015[5,"q4o"]*.[5,"q4o"])-            # Now use weighted average to determine market share of income spent
                               ((full_2015[1,"q4o"]*.[1,"q4o"])+
                                  (full_2015[2,"q4o"]*.[2,"q4o"])+
                                  (full_2015[3,"q4o"]*.[3,"q4o"])))/
-                                 full_2015[4,"q4o"],
+                                 ((full_2015[3,"q4o"]*pc_fac4o)+full_2015[4,"q4o"]),
     TRUE                 ~ q4o),
-) %>% 
+  
+) %>% mutate(             # Now calculate pc share of income by multiplying market share*pc_fac[income quartile,tenure]
+  
+  q1r=case_when(
+    hu_type=="pc"        ~ .[4,"q1r"]*pc_fac1r,
+    TRUE                 ~ q1r),
+  
+  q2r=case_when(
+    hu_type=="pc"        ~ .[4,"q2r"]*pc_fac2r,
+    TRUE                 ~ q2r),
+  
+  q3r=case_when(
+    hu_type=="pc"        ~ .[4,"q3r"]*pc_fac3r,
+    TRUE                 ~ q3r),
+  
+  q4r=case_when(
+    hu_type=="pc"        ~ .[4,"q4r"]*pc_fac4r,
+    TRUE                 ~ q4r),
+  
+  q1o=case_when(
+    hu_type=="pc"        ~ .[4,"q1o"]*pc_fac1o,
+    TRUE                 ~ q1o),
+  
+  q2o=case_when(
+    hu_type=="pc"        ~ .[4,"q2o"]*pc_fac2o,
+    TRUE                 ~ q2o),
+  
+  q3o=case_when(
+    hu_type=="pc"        ~ .[4,"q3o"]*pc_fac3o,
+    TRUE                 ~ q3o),
+  
+  q4o=case_when(
+    hu_type=="pc"        ~ .[4,"q4o"]*pc_fac4o,
+    TRUE                 ~ q4o),
+    ) %>% 
   filter(hu_type!="total") %>%                          # Remove row for totals to match prescribed format
   mutate_if(is.numeric,round,3)                         # Round to three decimal places
   
@@ -394,7 +438,7 @@ for(i in 1:nrow(scenario_params)) {
     rdr_2050=as.numeric(scenario_params[i,"rdr_units_2050"])
     odr_2050=as.numeric(scenario_params[i,"odr_units_2050"])
     rpc_2050=as.numeric(scenario_params[i,"total_rpc_units_2050"]) 	
-    opc_2050=as.numeric(scenario_params[i,"total_rpc_units_2050"]) 	
+    opc_2050=as.numeric(scenario_params[i,"total_opc_units_2050"]) 	
     price_2050_to_2015=as.numeric(scenario_params[i,"avg_hu_price_ratio_2050_to_2015"])
   }
 }
@@ -561,6 +605,42 @@ hh_income_matrix_2050     <- hh_income_matrix_2015 %>% mutate(
     hu_type=="ma"        ~   q4o*price_2050_to_2015)
 ) %>% 
   mutate_if(is.numeric,round,3)
+
+# Calculate weighted averages by quartile and tenure
+
+w_q1r = ((hh_income_matrix_2050[1,"q1r"]*full_2050[1,"q1r"])+(hh_income_matrix_2050[2,"q1r"]*full_2050[2,"q1r"])+
+           (hh_income_matrix_2050[3,"q1r"]*full_2050[3,"q1r"])+(hh_income_matrix_2050[4,"q1r"]*full_2050[4,"q1r"]))/
+           full_2050[5,"q1r"]
+
+w_q2r=((hh_income_matrix_2050[1,"q2r"]*full_2050[1,"q2r"])+(hh_income_matrix_2050[2,"q2r"]*full_2050[2,"q2r"])+
+         (hh_income_matrix_2050[3,"q2r"]*full_2050[3,"q2r"])+(hh_income_matrix_2050[4,"q2r"]*full_2050[4,"q2r"]))/
+         full_2050[5,"q2r"]
+
+w_q3r=((hh_income_matrix_2050[1,"q3r"]*full_2050[1,"q3r"])+(hh_income_matrix_2050[2,"q3r"]*full_2050[2,"q3r"])+
+         (hh_income_matrix_2050[3,"q3r"]*full_2050[3,"q3r"])+(hh_income_matrix_2050[4,"q3r"]*full_2050[4,"q3r"]))/
+         full_2050[5,"q3r"]
+
+w_q4r=((hh_income_matrix_2050[1,"q4r"]*full_2050[1,"q4r"])+(hh_income_matrix_2050[2,"q4r"]*full_2050[2,"q4r"])+
+         (hh_income_matrix_2050[3,"q4r"]*full_2050[3,"q4r"])+(hh_income_matrix_2050[4,"q4r"]*full_2050[4,"q4r"]))/
+         full_2050[5,"q4r"]
+
+w_q1o=((hh_income_matrix_2050[1,"q1o"]*full_2050[1,"q1o"])+(hh_income_matrix_2050[2,"q1o"]*full_2050[2,"q1o"])+
+         (hh_income_matrix_2050[3,"q1o"]*full_2050[3,"q1o"])+(hh_income_matrix_2050[4,"q1o"]*full_2050[4,"q1o"]))/
+         full_2050[5,"q1o"]
+
+w_q2o=((hh_income_matrix_2050[1,"q2o"]*full_2050[1,"q2o"])+(hh_income_matrix_2050[2,"q2o"]*full_2050[2,"q2o"])+
+         (hh_income_matrix_2050[3,"q2o"]*full_2050[3,"q2o"])+(hh_income_matrix_2050[4,"q2o"]*full_2050[4,"q2o"]))/
+         full_2050[5,"q2o"]
+
+w_q3o=((hh_income_matrix_2050[1,"q3o"]*full_2050[1,"q3o"])+(hh_income_matrix_2050[2,"q3o"]*full_2050[2,"q3o"])+
+         (hh_income_matrix_2050[3,"q3o"]*full_2050[3,"q3o"])+(hh_income_matrix_2050[4,"q3o"]*full_2050[4,"q3o"]))/
+         full_2050[5,"q3o"]
+
+w_q4o=((hh_income_matrix_2050[1,"q4o"]*full_2050[1,"q4o"])+(hh_income_matrix_2050[2,"q4o"]*full_2050[2,"q4o"])+
+         (hh_income_matrix_2050[3,"q4o"]*full_2050[3,"q4o"])+(hh_income_matrix_2050[4,"q4o"]*full_2050[4,"q4o"]))/
+         full_2050[5,"q4o"]
+
+w_temp <- data.frame(hu_type="total",w_q1r,w_q2r,w_q3r,w_q4r,w_q1o,w_q2o,w_q3o,w_q4o,)
   
 
 # Export
