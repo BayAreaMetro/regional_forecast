@@ -105,7 +105,7 @@ scenario_params_loc <- paste0(github_location,"scenario_specific_parameters.csv"
 
 USERPROFILE     <- gsub("\\\\","/", Sys.getenv("USERPROFILE"))
 BOX_Urban       <- file.path(USERPROFILE, "Box", "Modeling and Surveys", "Urban Modeling")
-Urbansim_Runs   <- file.path(BOX_Urban, "Bay Area Urbansim 1.5", "PBA50", "Draft Blueprint runs")
+Urbansim_Runs   <- file.path(BOX_Urban, "Bay Area Urbansim", "PBA50", "Draft Blueprint runs")
 Analysis_Run    <- file.path(Urbansim_Runs,"Blueprint Plus Crossing (s23)","v1.5.2")
 County_2015_Loc <- file.path(Analysis_Run,"run72_county_summaries_2015.csv")
 County_2050_Loc <- file.path(Analysis_Run,"run72_county_summaries_2050.csv")
