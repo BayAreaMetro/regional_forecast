@@ -1,0 +1,4 @@
+s20, s21, s22, s23 employment controls files contain a 2010 fix in regional_forecast: 
+https://github.com/BayAreaMetro/regional_forecast/commit/049f490ad5d3d2d6626aad0632e2cda245e1458d
+
+The versions in BAUS used in the Draft Blueprint do not contain this fix, to keep them consistent with what was used in the plan. 
