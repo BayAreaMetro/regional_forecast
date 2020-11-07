@@ -4,7 +4,7 @@
 
 ### Set assumptions here for shares by housing type and income quartile:
 
-scenario = "s23"
+scenario = "s24"
 
 # Share of total households by unit type in 2015 (taken from 2010 values in below document)
 # dr=deed restricted, su=subsidized, pc=price controlled, ma=market
@@ -99,16 +99,16 @@ pc_fac4o = 0.857    # Factor converting market share of income to price control 
 
 # Input file locations
 
-github_location     <- ("C:/Users/sisrael/Documents/GitHub/regional_forecast/housing_income_share_metric/")     # Needs to be set for script to work
-pums_2015_location  <- paste0(github_location,"ACS PUMS 2015 Share Income Spent on Housing by Quartile.csv")
+github_location     <- ("C:/Users/blu/Documents/GitHub/regional_forecast/housing_income_share_metric/")     # Needs to be set for script to work
+pums_2015_location  <- paste0(github_location,"ACS PUMS 2015 Share Income Spent on Housing by Quartile_UBI.csv")
 scenario_params_loc <- paste0(github_location,"scenario_specific_parameters.csv")
 
 USERPROFILE     <- gsub("\\\\","/", Sys.getenv("USERPROFILE"))
 BOX_Urban       <- file.path(USERPROFILE, "Box", "Modeling and Surveys", "Urban Modeling")
-Urbansim_Runs   <- file.path(BOX_Urban, "Bay Area Urbansim", "PBA50", "Draft Blueprint runs")
-Analysis_Run    <- file.path(Urbansim_Runs,"Blueprint Plus Crossing (s23)","v1.5.2")
-County_2015_Loc <- file.path(Analysis_Run,"run72_county_summaries_2015.csv")
-County_2050_Loc <- file.path(Analysis_Run,"run72_county_summaries_2050.csv")
+Urbansim_Runs   <- file.path(BOX_Urban, "Bay Area Urbansim", "PBA50", "Final Blueprint runs")
+Analysis_Run    <- file.path(Urbansim_Runs,"Final Blueprint (s24)","BAUS v2.12")
+County_2015_Loc <- file.path(Analysis_Run,"run340_county_summaries_2015.csv")
+County_2050_Loc <- file.path(Analysis_Run,"run340_county_summaries_2050.csv")
  
 # Import Libraries
 
@@ -116,7 +116,7 @@ suppressMessages(library(tidyverse))
 
 # Set working directory
 
-WD = "C:/Users/sisrael/Documents/GitHub/regional_forecast/housing_income_share_metric"
+WD = "C:/Users/blu/Documents/GitHub/regional_forecast/housing_income_share_metric"
 setwd(WD)
 
 # Set CPI values
@@ -656,6 +656,6 @@ income_share <- data.frame(hu_type="total",w_q1r,w_q1o,w_q2r,w_q2o,w_q3r,w_q3o,w
 
 # Export
 
-write.csv(income_share,file="2050 Share of Income Spent on Housing.csv",row.names = FALSE,quote=TRUE)
-write.csv(pums2015,file="2015 Share of Income Spent on Housing.csv",row.names = FALSE,quote=TRUE)
+write.csv(income_share,file="FBP 2050 Share of Income Spent on Housing.csv",row.names = FALSE,quote=TRUE)
+write.csv(pums2015,file="FBP 2015 Share of Income Spent on Housing.csv",row.names = FALSE,quote=TRUE)
 
