@@ -522,7 +522,7 @@ temp50p <- temp50p %>% mutate(
     TRUE                 ~   q3o),
   q4o=case_when(
     hu_type=="dr"        ~   to*drq4o,
-    hu_type=="su"        ~   to*suq3o,
+    hu_type=="su"        ~   to*suq4o,
     hu_type=="pc"        ~   to*pcq4o,
     TRUE                 ~   q4o)
 ) %>% 
