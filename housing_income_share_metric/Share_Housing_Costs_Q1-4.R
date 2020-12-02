@@ -29,6 +29,11 @@ drq2r = 0.0     # Deed restricted units, quartile 2, renters
 drq3r = 0.0     # Deed restricted units, quartile 3, renters
 drq4r = 0.0     # Deed restricted units, quartile 4, renters
 
+drq1r_50 = 0.955283     # Deed restricted units, quartile 1, renters
+drq2r_50 = 0.044717     # Deed restricted units, quartile 2, renters
+drq3r_50 = 0.0            # Deed restricted units, quartile 3, renters
+drq4r_50 = 0.0            # Deed restricted units, quartile 4, renters
+
 suq1r = 1.0     # Subsidized households, quartile 1, renters
 suq2r = 0.0     # Subsidized households, quartile 2, renters
 suq3r = 0.0     # Subsidized households, quartile 3, renters
@@ -39,6 +44,10 @@ pcq2r = 0.3     # Price control units, quartile 2, renters
 pcq3r = 0.3     # Price control units, quartile 3, renters
 pcq4r = 0.0     # Price control units, quartile 4, renters
 
+pcq1r_50 = 0.0     # Price control units, quartile 1, renters
+pcq2r_50 = 0.6     # Price control units, quartile 2, renters
+pcq3r_50 = 0.4     # Price control units, quartile 3, renters
+pcq4r_50 = 0.0     # Price control units, quartile 4, renters
 # Share by income quartile for each owner unit type. Within each unit type, Q1-Q4 should sum to 1 (100%) 
 
 drq1o = 1.0     # Deed restricted units, quartile 1, owners
@@ -106,9 +115,9 @@ scenario_params_loc <- paste0(github_location,"scenario_specific_parameters.csv"
 USERPROFILE     <- gsub("\\\\","/", Sys.getenv("USERPROFILE"))
 BOX_Urban       <- file.path(USERPROFILE, "Box", "Modeling and Surveys", "Urban Modeling")
 Urbansim_Runs   <- file.path(BOX_Urban, "Bay Area Urbansim", "PBA50", "Final Blueprint runs")
-Analysis_Run    <- file.path(Urbansim_Runs,"Final Blueprint (s24)","BAUS v2.12")
-County_2015_Loc <- file.path(Analysis_Run,"run340_county_summaries_2015.csv")
-County_2050_Loc <- file.path(Analysis_Run,"run340_county_summaries_2050.csv")
+Analysis_Run    <- file.path(Urbansim_Runs,"Final Blueprint (s24)","BAUS v2.25")
+County_2015_Loc <- file.path(Analysis_Run,"run182_county_summaries_2015.csv")
+County_2050_Loc <- file.path(Analysis_Run,"run182_county_summaries_2050.csv")
  
 # Import Libraries
 
@@ -137,7 +146,7 @@ county_2015         <- read.csv(County_2015_Loc,header=TRUE,stringsAsFactors = F
 
 county_2050         <- read.csv(County_2050_Loc,header=TRUE,stringsAsFactors = FALSE) %>% 
   summarize(HHINCQ1=sum(HHINCQ1),HHINCQ2=sum(HHINCQ2),HHINCQ3=sum(HHINCQ3),HHINCQ4=sum(HHINCQ4), 
-            TOTHH=sum(TOTHH)) 
+            TOTHH=sum(TOTHH))
 scenario_params     <- read.csv(scenario_params_loc,header = TRUE,stringsAsFactors = FALSE) 
 
 ## Fill in hh_proportion_matrix_2015 table
@@ -264,11 +273,10 @@ full_2015 <- temp15p %>% mutate(
     TRUE                 ~ q4o)
 ) %>% mutate(
   to=tt-tr)
-  
+
 hh_proportion_matrix_2015 <- full_2015 %>% 
   filter(hu_type!="total") %>%                 # Remove total row to match prescribed format
   select(-tr,-to,-tt)                          # Remove variables to match prescribed format
-
   
 ## Fill in hh_income_matrix_2015 table
 
@@ -278,7 +286,6 @@ temp15i <- pums2015 %>%  # Populate 2015 share income spent, join with shell fro
   mutate(hu_type="total") %>% 
   select(-q1t,-q2t,-q3t,-q4t) %>%              # Remove a few unnecessary variables
   rbind(shell,.) 
-
 
 temp15i <- temp15i %>% mutate(
   q1r=case_when(
@@ -465,13 +472,13 @@ temp50p <- county_2050 %>%  # Populate 2050 housing totals by income and tenure,
 temp50p <- temp50p %>% mutate(  # Now fill in cells
   tr=case_when(
     hu_type=="dr"        ~   rdr_2050,                 # Apply 2050 values from Scenario-Specific Values
-    hu_type=="su"        ~   round((full_2015[2,"tr"]/full_2015[5,"tr"])*
+    hu_type=="su"        ~   round((full_2015[2,"tr"]/full_2015[5,"tt"])*
                              county_2050[1,"TOTHH"]),  # Apply proportion from 2015 to 2050 su totals
     hu_type=="pc"        ~   rpc_2050,
     TRUE                 ~   tr),                     
   to=case_when(
     hu_type=="dr"        ~   odr_2050,                 # Apply 2050 values from Scenario-Specific Values
-    hu_type=="su"        ~   round((full_2015[2,"to"]/full_2015[5,"to"])*
+    hu_type=="su"        ~   round((full_2015[2,"to"]/full_2015[5,"tt"])*
                                      county_2050[1,"TOTHH"]),
     hu_type=="pc"        ~   opc_2050,
     TRUE                 ~   to), 
@@ -479,24 +486,24 @@ temp50p <- temp50p %>% mutate(  # Now fill in cells
 
 temp50p <- temp50p %>% mutate(
   q1r=case_when(
-    hu_type=="dr"        ~   tr*drq1r,                  # Split totals for housing unit type (by rent/own) into income quartiles
+    hu_type=="dr"        ~   tr*drq1r_50,                  # Split totals for housing unit type (by rent/own) into income quartiles
     hu_type=="su"        ~   tr*suq1r,                  # Factors used are the assumptions asserted at the top
-    hu_type=="pc"        ~   tr*pcq1r,
+    hu_type=="pc"        ~   tr*pcq1r_50,
     TRUE                 ~   q1r),
   q2r=case_when(
-    hu_type=="dr"        ~   tr*drq2r,
+    hu_type=="dr"        ~   tr*drq2r_50,
     hu_type=="su"        ~   tr*suq2r,
-    hu_type=="pc"        ~   tr*pcq2r,
+    hu_type=="pc"        ~   tr*pcq2r_50,
     TRUE                 ~   q2r),
   q3r=case_when(
-    hu_type=="dr"        ~   tr*drq3r,
+    hu_type=="dr"        ~   tr*drq3r_50,
     hu_type=="su"        ~   tr*suq3r,
-    hu_type=="pc"        ~   tr*pcq3r,
+    hu_type=="pc"        ~   tr*pcq3r_50,
     TRUE                 ~   q3r),
   q4r=case_when(
-    hu_type=="dr"        ~   tr*drq4r,
+    hu_type=="dr"        ~   tr*drq4r_50,
     hu_type=="su"        ~   tr*suq4r,
-    hu_type=="pc"        ~   tr*pcq4r,
+    hu_type=="pc"        ~   tr*pcq4r_50,
     TRUE                 ~   q4r),
   q1o=case_when(
     hu_type=="dr"        ~   to*drq1o,
@@ -515,7 +522,7 @@ temp50p <- temp50p %>% mutate(
     TRUE                 ~   q3o),
   q4o=case_when(
     hu_type=="dr"        ~   to*drq4o,
-    hu_type=="su"        ~   to*suq4o,
+    hu_type=="su"        ~   to*suq3o,
     hu_type=="pc"        ~   to*pcq4o,
     TRUE                 ~   q4o)
 ) %>% 
