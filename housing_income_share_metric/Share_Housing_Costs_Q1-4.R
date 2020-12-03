@@ -29,8 +29,8 @@ drq2r = 0.0     # Deed restricted units, quartile 2, renters
 drq3r = 0.0     # Deed restricted units, quartile 3, renters
 drq4r = 0.0     # Deed restricted units, quartile 4, renters
 
-drq1r_50 = 0.924777     # Deed restricted units, quartile 1, renters
-drq2r_50 = 0.075223     # Deed restricted units, quartile 2, renters
+drq1r_50 = 0.823474     # Deed restricted units, quartile 1, renters
+drq2r_50 = 0.176526     # Deed restricted units, quartile 2, renters
 drq3r_50 = 0.0            # Deed restricted units, quartile 3, renters
 drq4r_50 = 0.0            # Deed restricted units, quartile 4, renters
 
