@@ -15,9 +15,4 @@ This foilder contains the regional forecast files for Bay Area UrbanSim.
 ## Scenarios
 Each folder contains 6 files for use in BAUS:
 * meta: this folder contains data dictionaries ("dict") and optional metadata ("meta") for each of the files
-* s20: Baseline for PBA50 (so the lower HH count without policy change)
-* s21: Blueprint Basic
-* s22: Blueprint Plus Fix It First
-* s23: Blueprint Plus Crossing
-* s24: Final Blueprint
-* s25: Large Population Baseline for PBA50 (same total HH count; most likely will be No Project)
+* s20-s29 are scenario-specific folders for the scenarios described at https://github.com/BayAreaMetro/bayarea_urbansim/wiki/PBA50EIRalternatives and https://github.com/BayAreaMetro/bayarea_urbansim/wiki/PBA50scenarios
