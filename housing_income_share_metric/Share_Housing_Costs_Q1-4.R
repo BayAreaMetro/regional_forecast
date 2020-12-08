@@ -29,8 +29,8 @@ drq2r = 0.0     # Deed restricted units, quartile 2, renters
 drq3r = 0.0     # Deed restricted units, quartile 3, renters
 drq4r = 0.0     # Deed restricted units, quartile 4, renters
 
-drq1r_50 = 0.823474     # Deed restricted units, quartile 1, renters
-drq2r_50 = 0.176526     # Deed restricted units, quartile 2, renters
+drq1r_50 = 0.668693     # Deed restricted units, quartile 1, renters
+drq2r_50 = 0.331307     # Deed restricted units, quartile 2, renters
 drq3r_50 = 0.0            # Deed restricted units, quartile 3, renters
 drq4r_50 = 0.0            # Deed restricted units, quartile 4, renters
 
@@ -115,7 +115,7 @@ scenario_params_loc <- paste0(github_location,"scenario_specific_parameters.csv"
 USERPROFILE     <- gsub("\\\\","/", Sys.getenv("USERPROFILE"))
 BOX_Urban       <- file.path(USERPROFILE, "Box", "Modeling and Surveys", "Urban Modeling")
 Urbansim_Runs   <- file.path(BOX_Urban, "Bay Area Urbansim", "PBA50", "Final Blueprint runs")
-Analysis_Run    <- file.path(Urbansim_Runs,"Final Blueprint (s24)","BAUS v2.25")
+Analysis_Run    <- file.path(Urbansim_Runs,"Final Blueprint (s24)","BAUS v2.25 - FINAL VERSION")
 County_2015_Loc <- file.path(Analysis_Run,"run182_county_summaries_2015.csv")
 County_2050_Loc <- file.path(Analysis_Run,"run182_county_summaries_2050.csv")
  
@@ -145,7 +145,7 @@ county_2015         <- read.csv(County_2015_Loc,header=TRUE,stringsAsFactors = F
             TOTHH=sum(TOTHH)) 
 
 county_2050         <- read.csv(County_2050_Loc,header=TRUE,stringsAsFactors = FALSE) %>% 
-  summarize(HHINCQ1=sum(HHINCQ1),HHINCQ2=sum(HHINCQ2),HHINCQ3=sum(HHINCQ3),HHINCQ4=sum(HHINCQ4), 
+  summarize(HHINCQ1=1009965,HHINCQ2=920534,HHINCQ3=sum(HHINCQ3),HHINCQ4=sum(HHINCQ4), 
             TOTHH=sum(TOTHH))
 scenario_params     <- read.csv(scenario_params_loc,header = TRUE,stringsAsFactors = FALSE) 
 
