@@ -1,2 +1,3 @@
-The household_controls_s24.csv and regional_demographic_forecast_s24.csv files in regional_forecast contain an adjustment for UBI. 
-The versions in BAUS, used in the Final Blueprint, do not contain UBI. 
+s24, s26, s28: household_controls.csv and regional_demographic_forecast.csv contain an adjustment for UBI in this repository (regional_forecast). 
+- s24: The versions in BAUS, used in the Final Blueprint, do not contain UBI. 
+- s26 & s28: The versions in BAUS match the versions in regional_forecast and contain UBI. 
