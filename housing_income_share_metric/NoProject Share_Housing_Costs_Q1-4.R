@@ -106,7 +106,7 @@ scenario_params_loc <- paste0(github_location,"scenario_specific_parameters.csv"
 USERPROFILE     <- gsub("\\\\","/", Sys.getenv("USERPROFILE"))
 BOX_Urban       <- file.path(USERPROFILE, "Box", "Modeling and Surveys", "Urban Modeling")
 Urbansim_Runs   <- file.path(BOX_Urban, "Bay Area Urbansim", "PBA50", "EIR runs")
-Analysis_Run    <- file.path(Urbansim_Runs,"Baseline Large (s25) runs","NP_v8")
+Analysis_Run    <- file.path(Urbansim_Runs,"Baseline Large (s25) runs","NP_v8_FINAL")
 County_2015_Loc <- file.path(Analysis_Run,"run314_county_summaries_2015.csv")
 County_2050_Loc <- file.path(Analysis_Run,"run314_county_summaries_2050.csv")
  
@@ -116,7 +116,7 @@ suppressMessages(library(tidyverse))
 
 # Set working directory
 
-WD = "C:/Users/blu/Documents/GitHub/regional_forecast/housing_income_share_metric/No Project"
+WD = "C:/Users/blu/Documents/GitHub/regional_forecast/housing_income_share_metric"
 setwd(WD)
 
 # Set CPI values
@@ -264,6 +264,8 @@ full_2015 <- temp15p %>% mutate(
     TRUE                 ~ q4o)
 ) %>% mutate(
   to=tt-tr)
+
+write.csv(full_2015,file="full_2015.csv",row.names = FALSE,quote=TRUE)
 
 hh_proportion_matrix_2015 <- full_2015 %>% 
   filter(hu_type!="total") %>%                 # Remove total row to match prescribed format
@@ -551,6 +553,7 @@ full_2050 <- temp50p %>% mutate(
     hu_type=="ma"        ~ .[5,"to"]-(.[1,"to"] + .[2,"to"] + .[3,"to"]),
     TRUE                 ~ to)) %>% 
   mutate(tt=to+tr)
+write.csv(full_2050,file="full_2015.csv",row.names = FALSE,quote=TRUE)
 
 hh_proportion_matrix_2050 <- full_2050 %>% 
   filter(hu_type!="total") %>%                 # Remove total row to match prescribed format
