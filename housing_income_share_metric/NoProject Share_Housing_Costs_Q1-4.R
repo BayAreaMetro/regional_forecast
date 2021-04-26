@@ -429,7 +429,7 @@ hh_income_matrix_2015 <- temp15i %>% mutate(
     ) %>% 
   filter(hu_type!="total") %>%                          # Remove row for totals to match prescribed format
   mutate_if(is.numeric,round,3)                         # Round to three decimal places
-  
+write.csv(hh_income_matrix_2015,file="hh_income_matrix_2015_filled.csv",row.names = FALSE,quote=TRUE)  
 
 # Bring in 2050 scenario-specific information
 
@@ -553,7 +553,7 @@ full_2050 <- temp50p %>% mutate(
     hu_type=="ma"        ~ .[5,"to"]-(.[1,"to"] + .[2,"to"] + .[3,"to"]),
     TRUE                 ~ to)) %>% 
   mutate(tt=to+tr)
-write.csv(full_2050,file="full_2015.csv",row.names = FALSE,quote=TRUE)
+write.csv(full_2050,file="full_2050.csv",row.names = FALSE,quote=TRUE)
 
 hh_proportion_matrix_2050 <- full_2050 %>% 
   filter(hu_type!="total") %>%                 # Remove total row to match prescribed format
