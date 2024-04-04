@@ -449,7 +449,7 @@ for(i in 1:nrow(scenario_params)) {
     odr_2050=as.numeric(scenario_params[i,"odr_units_2050"])
     rpc_2050=as.numeric(scenario_params[i,"total_rpc_units_2050"]) 	
     opc_2050=as.numeric(scenario_params[i,"total_opc_units_2050"]) 	
-    price_2050_to_2020=as.numeric(scenario_params[i,"avg_hu_price_ratio_2050_to_2020"])
+    price_2050_to_2020=as.numeric(scenario_params[i,"avg_hu_price_ratio_2050_to_2015"])
   }
 }
  
