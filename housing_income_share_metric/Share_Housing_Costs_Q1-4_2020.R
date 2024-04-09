@@ -113,7 +113,12 @@ pc_fac4o = 0.857    # Factor converting market share of income to price control 
 USERPROFILE     <- gsub("\\\\","/", Sys.getenv("USERPROFILE"))  
 
 github_location     <- (file.path(USERPROFILE,"Documents/GitHub/regional_forecast/housing_income_share_metric"))     # May need to be differently configured for other users
+
 #pums_2019_location  <- file.path(github_location,"ACS PUMS 2019 Share Income Spent on Housing by Quartile_UBI.csv")
+#For PBA 2050 there was a a file with UBI adjustments
+#https://github.com/BayAreaMetro/regional_forecast/blob/main/housing_income_share_metric/ACS%20PUMS%202015%20Share%20Income%20Spent%20on%20Housing%20by%20Quartile_UBI.csv
+#The below version comes unadjusted from PUMS 2019 data as a proxy for 2020 (which doesn't have reliable ACS data)
+
 pums_2019_location  <- file.path(github_location,"ACS PUMS 2019 Share Income Spent on Housing by Quartile.csv")
 scenario_params_loc <- file.path(github_location,"scenario_specific_parameters.csv")
 
@@ -148,7 +153,7 @@ county_2020         <- read.csv(County_2020_Loc,header=TRUE,stringsAsFactors = F
             TOTHH=sum(TOTHH)) 
 
 county_2050         <- read.csv(County_2050_Loc,header=TRUE,stringsAsFactors = FALSE) %>% 
-  summarize(HHINCQ1=1009965,HHINCQ2=920534,HHINCQ3=sum(HHINCQ3),HHINCQ4=sum(HHINCQ4), 
+  summarize(HHINCQ1=sum(HHINCQ1),HHINCQ2=sum(HHINCQ2),HHINCQ3=sum(HHINCQ3),HHINCQ4=sum(HHINCQ4), 
             TOTHH=sum(TOTHH))
 scenario_params     <- read.csv(scenario_params_loc,header = TRUE,stringsAsFactors = FALSE) 
 
