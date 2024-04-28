@@ -108,12 +108,15 @@ pc_fac4o = 0.857    # Factor converting market share of income to price control 
 
 # Input file locations
 
-github_location     <- ("C:/Users/blu/Documents/GitHub/regional_forecast/housing_income_share_metric/")     # Needs to be set for script to work
-pums_2015_location  <- paste0(github_location,"ACS PUMS 2015 Share Income Spent on Housing by Quartile_UBI.csv")
-scenario_params_loc <- paste0(github_location,"scenario_specific_parameters.csv")
+# run from this directory
+pums_2015_location  <- "ACS_PUMS_2015_Share_Income_Spent_on_Housing_by_Quartile_UBI.csv"
+scenario_params_loc <- "scenario_specific_parameters.csv"
 
 USERPROFILE     <- gsub("\\\\","/", Sys.getenv("USERPROFILE"))
 BOX_Urban       <- file.path(USERPROFILE, "Box", "Modeling and Surveys", "Urban Modeling")
+if (Sys.getenv("USERNAME") %in% c("lzorn")) {
+  BOX_Urban     <- file.path("E:/Box", "Modeling and Surveys", "Urban Modeling")
+}
 Urbansim_Runs   <- file.path(BOX_Urban, "Bay Area Urbansim", "PBA50", "Final Blueprint runs")
 Analysis_Run    <- file.path(Urbansim_Runs,"Final Blueprint (s24)","BAUS v2.25 - FINAL VERSION")
 County_2015_Loc <- file.path(Analysis_Run,"run182_county_summaries_2015.csv")
@@ -122,11 +125,6 @@ County_2050_Loc <- file.path(Analysis_Run,"run182_county_summaries_2050.csv")
 # Import Libraries
 
 suppressMessages(library(tidyverse))
-
-# Set working directory
-
-WD = "C:/Users/blu/Documents/GitHub/regional_forecast/housing_income_share_metric"
-setwd(WD)
 
 # Set CPI values
 
@@ -273,6 +271,9 @@ full_2015 <- temp15p %>% mutate(
     TRUE                 ~ q4o)
 ) %>% mutate(
   to=tt-tr)
+
+write.csv(full_2015,file="full_FBP_2015.csv",row.names = FALSE,quote=TRUE)
+print("Wrote debug file, full_FBP_2015.csv")
 
 hh_proportion_matrix_2015 <- full_2015 %>% 
   filter(hu_type!="total") %>%                 # Remove total row to match prescribed format
@@ -436,7 +437,9 @@ hh_income_matrix_2015 <- temp15i %>% mutate(
     ) %>% 
   filter(hu_type!="total") %>%                          # Remove row for totals to match prescribed format
   mutate_if(is.numeric,round,3)                         # Round to three decimal places
-  
+
+write.csv(hh_income_matrix_2015,file="hh_income_matrix_FBP_2015_filled.csv",row.names = FALSE,quote=TRUE)  
+print("Wrote debug file, hh_income_matrix_FBP_2015_filled.csv")
 
 # Bring in 2050 scenario-specific information
 
@@ -560,6 +563,8 @@ full_2050 <- temp50p %>% mutate(
     hu_type=="ma"        ~ .[5,"to"]-(.[1,"to"] + .[2,"to"] + .[3,"to"]),
     TRUE                 ~ to)) %>% 
   mutate(tt=to+tr)
+write.csv(full_2050,file="full_FBP_2050.csv",row.names = FALSE,quote=TRUE)
+print("Wrote debug file, full_FBP_2050.csv")
 
 hh_proportion_matrix_2050 <- full_2050 %>% 
   filter(hu_type!="total") %>%                 # Remove total row to match prescribed format
@@ -612,6 +617,10 @@ hh_income_matrix_2050     <- hh_income_matrix_2015 %>% mutate(
     hu_type=="ma"        ~   q4o*price_2050_to_2015)
 ) %>% 
   mutate_if(is.numeric,round,3)
+
+write.csv(hh_income_matrix_2050,file="hh_income_matrix_FBP_2050_filled.csv",row.names = FALSE,quote=TRUE)  
+print("Wrote debug file, hh_income_matrix_FBP_2050_filled.csv")
+
 
 # Calculate weighted averages by quartile and tenure
 
@@ -666,3 +675,5 @@ income_share <- data.frame(hu_type="total",w_q1r,w_q1o,w_q2r,w_q2o,w_q3r,w_q3o,w
 write.csv(income_share,file="FBP 2050 Share of Income Spent on Housing.csv",row.names = FALSE,quote=TRUE)
 write.csv(pums2015,file="FBP 2015 Share of Income Spent on Housing.csv",row.names = FALSE,quote=TRUE)
 
+print("Wrote FBP 2050 Share of Income Spent on Housing.csv")
+print("Wrote FBP 2015 Share of Income Spent on Housing.csv")

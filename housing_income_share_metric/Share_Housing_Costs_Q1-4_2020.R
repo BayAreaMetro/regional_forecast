@@ -112,17 +112,18 @@ pc_fac4o = 0.857    # Factor converting market share of income to price control 
 
 USERPROFILE     <- gsub("\\\\","/", Sys.getenv("USERPROFILE"))  
 
-github_location     <- (file.path(USERPROFILE,"Documents/GitHub/regional_forecast/housing_income_share_metric"))     # May need to be differently configured for other users
-
 #pums_2019_location  <- file.path(github_location,"ACS PUMS 2019 Share Income Spent on Housing by Quartile_UBI.csv")
 #For PBA 2050 there was a a file with UBI adjustments
 #https://github.com/BayAreaMetro/regional_forecast/blob/main/housing_income_share_metric/ACS%20PUMS%202015%20Share%20Income%20Spent%20on%20Housing%20by%20Quartile_UBI.csv
 #The below version comes unadjusted from PUMS 2019 data as a proxy for 2020 (which doesn't have reliable ACS data)
 
-pums_2019_location  <- file.path(github_location,"ACS PUMS 2019 Share Income Spent on Housing by Quartile.csv")
-scenario_params_loc <- file.path(github_location,"scenario_specific_parameters.csv")
+pums_2019_location  <- "ACS_PUMS_2019_Share_Income_Spent_on_Housing_by_Quartile.csv"
+scenario_params_loc <- "scenario_specific_parameters.csv"
 
 BOX_Urban       <- file.path(USERPROFILE, "Box", "Modeling and Surveys", "Urban Modeling")
+if (Sys.getenv("USERNAME") %in% c("lzorn")) {
+  BOX_Urban     <- file.path("E:/Box", "Modeling and Surveys", "Urban Modeling")
+}
 Urbansim_Runs   <- file.path(BOX_Urban, "Bay Area Urbansim", "PBA50", "Final Blueprint runs")
 Analysis_Run    <- file.path(Urbansim_Runs,"Final Blueprint (s24)","BAUS v2.25 - FINAL VERSION")
 County_2020_Loc <- file.path(Analysis_Run,"run182_county_summaries_2020.csv")
@@ -131,10 +132,6 @@ County_2050_Loc <- file.path(Analysis_Run,"run182_county_summaries_2050.csv")
 # Import Libraries
 
 suppressMessages(library(tidyverse))
-
-# Set working directory
-
-setwd(github_location)
 
 # Set CPI values for 2000 and 2019
 
@@ -674,3 +671,5 @@ income_share <- data.frame(hu_type="total",w_q1r,w_q1o,w_q2r,w_q2o,w_q3r,w_q3o,w
 write.csv(income_share,file="FBP 2050 Share of Income Spent on Housing.csv",row.names = FALSE,quote=TRUE)
 write.csv(pums2019,file="FBP 2020 Share of Income Spent on Housing.csv",row.names = FALSE,quote=TRUE)
 
+print("Wrote FBP 2050 Share of Income Spent on Housing.csv")
+print("Wrote FBP 2020 Share of Income Spent on Housing.csv")
