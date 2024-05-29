@@ -1,12 +1,13 @@
 # Share of HH Income Spent on Housing Metric
 
-Code and data here is used to calculate the metric for share of HH income spent on housing.
+Most of the files in this folder have been deprecated as the code to estimate the share of household income spent on housing has been moved here: [bayarea_urbansim/scripts/metrics/metrics_affordable.py:`housing_cost_share_of_income()`](https://github.com/BayAreaMetro/bayarea_urbansim/blob/main/scripts/metrics/metrics_affordable.py)
 
-Data for this model come from different files (metadata is in csv file with "dict" appended to data file name):
-* The count of HHs by pseudo-quartile for a given historical or forecast year come from the household_controls csv within each scenario directory at https://github.com/BayAreaMetro/regional_forecast/tree/master/to_baus. For instance, Scenario 21's HH forecasts file by pseudo-quartiles is at: https://github.com/BayAreaMetro/regional_forecast/blob/master/to_baus/s21/household_controls_s21.csv. These serves as inputs into this repository. 
-* The hh_proportion_matrix_2015 is the share of HHs in each segment in 2015. Thhe hh_income_matrix_2015.csv is the mean share of HH income spent on housing for households in that segment in 2015. 
-* The hh_proportion_matrix_2050_[snn].csv is the share of HHs in each segment in 2050. Thhe hh_income_matrix_2050_[snn].csv is the mean share of HH income spent on housing for households in that segment in 2050. 
-* Data that is specific to each scenaro (besides the two matrices) is in [scenario_specific_parameters.csv](https://github.com/BayAreaMetro/regional_forecast/blob/master/housing_income_share_metric/scenario_specific_parameters.csv)
+The only files remaining in use by that script have been moved to Box.
 
-* Output table housing_income_share_output_snn_yyyy_mm_dd_tttt.csv (in the style of [housing_income_share_output_snn_yyyy_mm_dd_tttt_template.csv](https://github.com/BayAreaMetro/regional_forecast/blob/master/housing_income_share_metric/housing_income_share_output_[snn]_2020_05_15_1141_tempate.csv) above) where the end is a time stamp. This is set up as above with info on
+For the PBA50+ Draft Blueprint, they can be found here:
+* [scenario_specific_parameters.csv](https://mtcdrive.box.com/s/ll9ed0rkxcl32fwu6227qpssd03epad5)
+* [ACS_PUMS_2019_Share_Income_Spent_on_Housing_by_Quartile.csv](https://mtcdrive.box.com/s/9f10v79fg5x9b0ft2gik8ec85u5ezc9u)
+
+
+To see deprecated files, see the tree for the last commit before these files were removed: https://github.com/BayAreaMetro/regional_forecast/tree/d4eb87f471c40b29b6ca3e3f088952fc5e046b48/housing_income_share_metric
 

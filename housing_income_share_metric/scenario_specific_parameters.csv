@@ -1,9 +1,0 @@
-scenario, rdr_units_2050, odr_units_2050, total_rpc_units_2050, total_opc_units_2050, avg_hu_price_ratio_2050_to_2010, avg_hu_price_ratio_2050_to_2015, cost_to_provide_one_deed_restriced_unit, rent_control_reloc_freq, transfer_shr_q4, transfer_shr_q3, transfer_shr_q2
-s20, , , , ,1.7459,1.3364,  , , , ,
-s21,210810,0, , ,1.1085,0.8485,400000, , , ,
-s22, , , , ,1.1006,0.8425,400000, , , ,
-s23,261999,0,144892,0,1.1009,0.8427,400000, , , ,
-s24,801648,364739,144892,0,1.1009,0.8427,400000,,,,
-s25,491680,0,144892,0,1.1009,0.8427,400000,,,,
-RTP2025_NP,240320,0,144892,0,1.1009,0.8427,400000,,,,
-RTP2025_DBP,969236,0,144892,0,1.1009,0.8427,400000,,,,
